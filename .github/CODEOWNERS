@@ -1,0 +1,4 @@
+# Automatically generated CODEOWNERS
+# Regenerate with `make update-codeowners`
+draft-skokan-oauth-rfc8707bis.md panva.ip@gmail.com brian.d.campbell@gmail.com ve7jtb@ve7jtb.com hannes.tschofenig@gmx.net
+rfc8707.txt brian.d.campbell@gmail.com ve7jtb@ve7jtb.com hannes.tschofenig@gmx.net
