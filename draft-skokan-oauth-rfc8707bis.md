@@ -10,19 +10,19 @@ number:
 date:
 consensus: true
 v: 3
-area: Security
-workgroup: OAuth Working Group
+area: "Security"
+workgroup: "Web Authorization Protocol"
 keyword:
  - OAuth
  - Resource
  - Audience
 venue:
-  group: OAuth
-  type: Working Group
-  mail: oauth@ietf.org
-  arch: https://mailarchive.ietf.org/arch/browse/oauth/
-  github: panva/draft-oauth-rfc8707bis
-  latest: https://panva.github.io/draft-oauth-rfc8707bis/draft-skokan-oauth-rfc8707bis.html
+  group: "Web Authorization Protocol"
+  type: "Working Group"
+  mail: "oauth@ietf.org"
+  arch: "https://mailarchive.ietf.org/arch/browse/oauth/"
+  github: "panva/draft-oauth-rfc8707bis"
+  latest: "https://panva.github.io/draft-oauth-rfc8707bis/draft-skokan-oauth-rfc8707bis.html"
 
 author:
  -
