@@ -2,14 +2,19 @@
 
 
 
-WG Working Group                                              Y. N. Here
-Internet-Draft                                    Your Organization Here
-Intended status: Informational                          28 February 2026
-Expires: 1 September 2026
+OAuth Working Group                                            F. Skokan
+Internet-Draft                                                      Okta
+Obsoletes: 8707 (if approved)                                B. Campbell
+Intended status: Standards Track                           Ping Identity
+Expires: 1 September 2026                                     J. Bradley
+                                                                  Yubico
+                                                           H. Tschofenig
+                                                             Arm Limited
+                                                        28 February 2026
 
 
-                           TODO - Your title
-                  draft-todo-yourname-protocol-latest
+                   Resource Indicators for OAuth 2.0
+                  draft-skokan-oauth-rfc8707bis-latest
 
 Abstract
 
@@ -20,16 +25,17 @@ About This Document
    This note is to be removed before publishing as an RFC.
 
    The latest revision of this draft can be found at
-   https://example.com/LATEST.  Status information for this document may
-   be found at https://datatracker.ietf.org/doc/draft-todo-yourname-
-   protocol/.
+   https://panva.github.io/draft-oauth-rfc8707bis/draft-skokan-oauth-
+   rfc8707bis.html.  Status information for this document may be found
+   at https://datatracker.ietf.org/doc/draft-skokan-oauth-rfc8707bis/.
 
-   Discussion of this document takes place on the WG Working Group
-   mailing list (mailto:WG@example.com), which is archived at
-   https://example.com/WG.
+   Discussion of this document takes place on the OAuth Working Group
+   mailing list (mailto:oauth@ietf.org), which is archived at
+   https://mailarchive.ietf.org/arch/browse/oauth/.  Subscribe at
+   https://www.ietf.org/mailman/listinfo/oauth/.
 
    Source for this draft and an issue tracker can be found at
-   https://github.com/USER/REPO.
+   https://github.com/panva/draft-oauth-rfc8707bis.
 
 Status of This Memo
 
@@ -70,7 +76,7 @@ Table of Contents
    4.  IANA Considerations
    5.  Normative References
    Acknowledgments
-   Author's Address
+   Authors' Addresses
 
 1.  Introduction
 
@@ -107,8 +113,23 @@ Acknowledgments
 
    TODO acknowledge.
 
-Author's Address
+Authors' Addresses
 
-   Your Name Here
-   Your Organization Here
-   Email: your.email@example.com
+   Filip Skokan
+   Okta
+   Email: panva.ip@gmail.com
+
+
+   Brian Campbell
+   Ping Identity
+   Email: brian.d.campbell@gmail.com
+
+
+   John Bradley
+   Yubico
+   Email: ve7jtb@ve7jtb.com
+
+
+   Hannes Tschofenig
+   Arm Limited
+   Email: hannes.tschofenig@gmx.net
