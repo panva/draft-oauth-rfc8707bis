@@ -162,14 +162,6 @@ Table of Contents
 
 2.  Resource Parameter
 
-   The resource parameter is used in requests to the authorization
-   server and in access token responses.  In requests, the parameter
-   appears one or more times with each occurrence carrying a single URI
-   value, as is typical for application/x-www-form-urlencoded encoded
-   parameters.  In access token responses, the parameter is a JSON array
-   of string values, consistent with the JSON-based response format
-   defined in Section 5.1 of [RFC6749].
-
    In requests to the authorization server, a client MAY indicate the
    protected resource (a.k.a. resource server, application, API, etc.)
    to which it is requesting access by including the following parameter

@@ -1319,22 +1319,14 @@ appear in all capitals, as shown here.<a href="#section-1.1-1" class="pilcrow">�
       <h2 id="name-resource-parameter">
 <a href="#section-2" class="section-number selfRef">2. </a><a href="#name-resource-parameter" class="section-name selfRef">Resource Parameter</a>
       </h2>
-<p id="section-2-1">The <code>resource</code> parameter is used in requests to the
-authorization server and in access token responses. In
-requests, the parameter appears one or more times with each
-occurrence carrying a single URI value, as is typical for
-<code>application/x-www-form-urlencoded</code> encoded parameters. In
-access token responses, the parameter is a JSON array of
-string values, consistent with the JSON-based response format
-defined in <span><a href="https://rfc-editor.org/rfc/rfc6749#section-5.1" class="relref">Section 5.1</a> of [<a href="#RFC6749" class="cite xref">RFC6749</a>]</span>.<a href="#section-2-1" class="pilcrow">¶</a></p>
-<p id="section-2-2">In requests to the authorization server, a client <span class="bcp14">MAY</span> indicate
-the protected resource (a.k.a. resource server, application,
-API, etc.) to which it is requesting access by including the
-following parameter in the request.<a href="#section-2-2" class="pilcrow">¶</a></p>
-<span class="break"></span><dl class="dlParallel" id="section-2-3">
-        <dt id="section-2-3.1">resource:</dt>
-        <dd style="margin-left: 1.5em" id="section-2-3.2">
-          <p id="section-2-3.2.1">Indicates the target service or resource to which access is
+<p id="section-2-1">In requests to the authorization server, a client <span class="bcp14">MAY</span> indicate the
+protected resource (a.k.a. resource server, application, API, etc.) to
+which it is requesting access by including the following parameter in
+the request.<a href="#section-2-1" class="pilcrow">¶</a></p>
+<span class="break"></span><dl class="dlParallel" id="section-2-2">
+        <dt id="section-2-2.1">resource:</dt>
+        <dd style="margin-left: 1.5em" id="section-2-2.2">
+          <p id="section-2-2.2.1">Indicates the target service or resource to which access is
 being requested.  Its value <span class="bcp14">MUST</span> be an absolute URI, as
 specified by <span><a href="https://rfc-editor.org/rfc/rfc3986#section-4.3" class="relref">Section 4.3</a> of [<a href="#RFC3986" class="cite xref">RFC3986</a>]</span>.  The URI <span class="bcp14">MUST NOT</span>
 include a fragment component. It <span class="bcp14">SHOULD NOT</span> include a query
@@ -1347,18 +1339,18 @@ resource, which <span class="bcp14">MAY</span> be a locator that corresponds to 
 network-addressable location where the target resource is
 hosted.  Multiple <code>resource</code> parameters <span class="bcp14">MAY</span> be used to
 indicate that the requested token is intended to be used at
-multiple resources.<a href="#section-2-3.2.1" class="pilcrow">¶</a></p>
+multiple resources.<a href="#section-2-2.2.1" class="pilcrow">¶</a></p>
 </dd>
       <dd class="break"></dd>
 </dl>
-<p id="section-2-4">The parameter value identifies a resource to which the client is
+<p id="section-2-3">The parameter value identifies a resource to which the client is
 requesting access.  The parameter can carry the location of a protected
 resource, typically as an https URL or a more abstract identifier.  This
 enables the authorization server to apply policy as appropriate for the
 resource, such as determining the type and content of tokens to be
 issued, if and how tokens are encrypted, and applying appropriate
-audience restrictions.<a href="#section-2-4" class="pilcrow">¶</a></p>
-<p id="section-2-5">The client <span class="bcp14">SHOULD</span> provide the most specific URI that it can for
+audience restrictions.<a href="#section-2-3" class="pilcrow">¶</a></p>
+<p id="section-2-4">The client <span class="bcp14">SHOULD</span> provide the most specific URI that it can for
 the complete API or set of resources it intends to access. In
 practice, a client will know a base URI for the application or
 resource that it interacts with, which is appropriate to use as
@@ -1377,27 +1369,27 @@ endpoints such as <code>https://apps.example.com/scim/Users</code>,
 <code>https://apps.example.com/scim/Schemas</code>. The client would use
 <code>https://apps.example.com/scim/</code> as the resource so that the
 issued access token is valid for all the endpoints of the SCIM
-API.<a href="#section-2-5" class="pilcrow">¶</a></p>
-<p id="section-2-6">The following error code is provided for an authorization server to
+API.<a href="#section-2-4" class="pilcrow">¶</a></p>
+<p id="section-2-5">The following error code is provided for an authorization server to
 indicate problems with the requested resource(s) in response to an
 authorization request or access token request. It can also be used to
 inform the client that it has requested an invalid combination of
-resource and scope.<a href="#section-2-6" class="pilcrow">¶</a></p>
-<span class="break"></span><dl class="dlParallel" id="section-2-7">
-        <dt id="section-2-7.1">invalid_target:</dt>
-        <dd style="margin-left: 1.5em" id="section-2-7.2">
-          <p id="section-2-7.2.1">The requested resource is invalid, missing, unknown, or malformed.<a href="#section-2-7.2.1" class="pilcrow">¶</a></p>
+resource and scope.<a href="#section-2-5" class="pilcrow">¶</a></p>
+<span class="break"></span><dl class="dlParallel" id="section-2-6">
+        <dt id="section-2-6.1">invalid_target:</dt>
+        <dd style="margin-left: 1.5em" id="section-2-6.2">
+          <p id="section-2-6.2.1">The requested resource is invalid, missing, unknown, or malformed.<a href="#section-2-6.2.1" class="pilcrow">¶</a></p>
 </dd>
       <dd class="break"></dd>
 </dl>
-<p id="section-2-8">The authorization server <span class="bcp14">SHOULD</span> audience-restrict issued access tokens
+<p id="section-2-7">The authorization server <span class="bcp14">SHOULD</span> audience-restrict issued access tokens
 to the resource(s) indicated by the <code>resource</code> parameter. Audience
 restrictions can be communicated in JSON Web Tokens <span>[<a href="#RFC7519" class="cite xref">RFC7519</a>]</span> with the
 <code>aud</code> claim and the top-level member of the same name provides the
 audience restriction information in a Token Introspection <span>[<a href="#RFC7662" class="cite xref">RFC7662</a>]</span>
 response. The authorization server may use the exact <code>resource</code> value as
 the audience or it may map from that value to a more general URI or
-abstract identifier for the given resource.<a href="#section-2-8" class="pilcrow">¶</a></p>
+abstract identifier for the given resource.<a href="#section-2-7" class="pilcrow">¶</a></p>
 <div id="authorization-request">
 <section id="section-2.1">
         <h3 id="name-authorization-request">
