@@ -94,7 +94,9 @@ resource:
   which the access token is valid. The array MUST contain at least
   one value.
 
-\[\[TODO: Should the response use `resource` (a JSON string) when a
+\[\[TODO:
+([#1](https://github.com/panva/draft-oauth-rfc8707bis/issues/1))
+Should the response use `resource` (a JSON string) when a
 single resource is indicated and `resources` (a JSON array of strings)
 when multiple are indicated instead?\]\]
 
