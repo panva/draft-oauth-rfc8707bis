@@ -26,9 +26,13 @@ venue:
 
 author:
  -
+    fullname: Filip Skokan
+    organization: Okta
+    email: panva.ip@gmail.com
+ -
     fullname: Brian Campbell
     organization: Ping Identity
-    email: brian.d.campbell@gmail.com
+    email: bcampbell@pingidentity.com
  -
     fullname: John Bradley
     organization: Yubico
