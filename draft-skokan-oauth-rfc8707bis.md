@@ -412,7 +412,7 @@ responsibility to validate out of band that any network endpoint to which tokens
 
 # Privacy Considerations
 
-In typical OAuth deployments the authorization sever is in a position to observe and track a significant
+In typical OAuth deployments the authorization server is in a position to observe and track a significant
 amount of user and client behavior. It is largely just inherent to the nature of OAuth, and this document
 does little to affect that. In some cases, however, such as when access token introspection is not being
 used, use of the resource parameter defined herein may allow for tracking behavior at a somewhat more
