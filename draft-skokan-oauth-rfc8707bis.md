@@ -129,24 +129,24 @@ This specification uses the terms "access token", "refresh token",
 
 # Resource Parameter {#ResourceParameter}
 
-In requests to the authorization server, a client **MAY**
+In requests to the authorization server, a client MAY
 indicate the protected resource (a.k.a. resource server, application,
 API, etc.) to which it is requesting access by including the following
 parameter in the request.
 
 resource:
 : Indicates the target service or resource to which access is being
-  requested.  Its value **MUST** be an absolute URI, as
-  specified by {{Section 4.3 of RFC3986}}.  The URI **MUST NOT** include a fragment
-  component. It **SHOULD NOT** include a query component, but
+  requested.  Its value MUST be an absolute URI, as
+  specified by {{Section 4.3 of RFC3986}}.  The URI MUST NOT include a fragment
+  component. It SHOULD NOT include a query component, but
   it is recognized that there are cases that make a query component a
   useful and necessary part of the resource parameter, such as when one
   or more query parameters are used to scope requests to an application.
   The `resource` parameter URI value is an identifier
-  representing the identity of the resource, which **MAY** be
+  representing the identity of the resource, which MAY be
   a locator that corresponds to a network-addressable location where the
   target resource is hosted.  Multiple `resource` parameters
-  **MAY** be used to indicate that the requested token is
+  MAY be used to indicate that the requested token is
   intended to be used at multiple resources.
 
 The parameter value identifies a resource to which the client is
@@ -157,11 +157,11 @@ appropriate for the resource, such as determining the type and content
 of tokens to be issued, if and how tokens are encrypted, and applying
 appropriate audience restrictions.
 
-The client **SHOULD** provide the most specific URI that it
+The client SHOULD provide the most specific URI that it
 can for the complete API or set of resources it intends to access.
 In practice, a client will know a base URI for the application or resource that it interacts with, which
 is appropriate to use as the value of the `resource` parameter.
-The client **SHOULD** use the base URI of the API as the `resource` parameter
+The client SHOULD use the base URI of the API as the `resource` parameter
 value unless specific knowledge of the resource dictates otherwise.
 For example, the value `https://api.example.com/` would be used
 for a resource that is the exclusive application on that host; however,
@@ -183,7 +183,7 @@ it has requested an invalid combination of resource and scope.
 invalid_target:
 : The requested resource is invalid, missing, unknown, or malformed.
 
-The authorization server **SHOULD** audience-restrict
+The authorization server SHOULD audience-restrict
 issued access tokens to the resource(s) indicated by the
 `resource` parameter. Audience restrictions can be
 communicated in JSON Web Tokens {{RFC7519}} with the `aud` claim and the top-level
@@ -211,11 +211,11 @@ when using the JWT Secured Authorization Request (JAR) {{RFC9101}}, a single
 while multiple values are represented as an array of strings.
 
 If the client omits the `resource` parameter when requesting
-authorization, the authorization server **MAY** process the
+authorization, the authorization server MAY process the
 request with no specific resource or by using a predefined default
 resource value.
-Alternatively, the authorization server **MAY** require clients to specify the resource(s) they intend to
-access and **MAY** fail requests that omit the parameter with an `invalid_target` error.
+Alternatively, the authorization server MAY require clients to specify the resource(s) they intend to
+access and MAY fail requests that omit the parameter with an `invalid_target` error.
 The authorization server might use this data to inform the user about the resources the client
 is going to access on their behalf, to apply policy (e.g., refuse the request due to unknown resources),
 and to determine the set of resources that can be used in subsequent
