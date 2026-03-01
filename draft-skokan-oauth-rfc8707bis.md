@@ -72,7 +72,7 @@ resource(s) to which it is requesting access.
 
 --- middle
 
-# Introduction {#Introduction}
+# Introduction
 
 Several years of deployment and implementation experience with the OAuth 2.0
 Authorization Framework {{RFC6749}}
@@ -115,11 +115,11 @@ is important and useful. A number of implementations and deployments of OAuth 2.
 toward that end.
 Going forward, this specification aspires to provide a standardized and interoperable alternative to the proprietary approaches.
 
-## Requirements Notation and Conventions {#RNC}
+## Requirements Notation and Conventions
 
 {::boilerplate bcp14-tagged}
 
-## Terminology {#Terminology}
+## Terminology
 
 This specification uses the terms "access token", "refresh token",
 "authorization server", "resource server", "authorization endpoint",
@@ -193,7 +193,7 @@ the exact `resource` value as the audience or it may map from
 that value to a more general URI or abstract identifier for the given
 resource.
 
-## Authorization Request {#authz-req}
+## Authorization Request
 
 When the `resource` parameter is used in an authorization
 request to the authorization endpoint, it indicates the identity of
@@ -260,7 +260,7 @@ Host: authorization-server.example.com
 ~~~
 {: #authz-endpoint-example-code title="Code Flow Authorization Request"}
 
-## Access Token Request {#token-req}
+## Access Token Request
 
 When the `resource` parameter is used on an access token request made to the token endpoint,
 for all grant types, it indicates the target service or protected resource where the client intends to use
@@ -375,7 +375,7 @@ Cache-Control: no-cache, no-store
 ~~~
 {: #response-example-rt title="Access Token Response"}
 
-# Security Considerations {#Security}
+# Security Considerations
 
 An audience-restricted access token that is legitimately presented to a
 resource cannot then be taken by that resource and presented elsewhere
@@ -410,7 +410,7 @@ network location, reducing the risk of malicious endpoints obtaining tokens mean
 If the `resource` parameter contains an abstract identifier, it is the client's
 responsibility to validate out of band that any network endpoint to which tokens are sent are the intended audience for that identifier.
 
-# Privacy Considerations {#Privacy}
+# Privacy Considerations
 
 In typical OAuth deployments the authorization sever is in a position to observe and track a significant
 amount of user and client behavior. It is largely just inherent to the nature of OAuth, and this document
@@ -418,7 +418,7 @@ does little to affect that. In some cases, however, such as when access token in
 used, use of the resource parameter defined herein may allow for tracking behavior at a somewhat more
 granular and specific level than would otherwise be possible in its absence.
 
-# IANA Considerations {#IANA}
+# IANA Considerations
 
 ## OAuth Parameters Registration
 
