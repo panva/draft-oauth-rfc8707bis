@@ -9,7 +9,7 @@ Intended status: Standards Track                           Ping Identity
 Expires: 2 September 2026                                     J. Bradley
                                                                   Yubico
                                                            H. Tschofenig
-                                                             Arm Limited
+                                                                   H-BRS
                                                             1 March 2026
 
 
@@ -629,7 +629,7 @@ Document History
 
    *  Updated Brian Campbell's email address
 
-   *  Updated Hannes Tschofenig's email address
+   *  Updated Hannes Tschofenig's affiliation
 
    *  Applied verified erratum 6810
 
@@ -669,5 +669,5 @@ Authors' Addresses
 
 
    Hannes Tschofenig
-   Arm Limited
+   H-BRS
    Email: hannes.tschofenig@gmx.net
