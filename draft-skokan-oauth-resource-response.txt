@@ -1,0 +1,249 @@
+
+
+
+
+Web Authorization Protocol                                     F. Skokan
+Internet-Draft                                                      Okta
+Updates: 8707 (if approved)                                 1 March 2026
+Intended status: Standards Track                                        
+Expires: 2 September 2026
+
+
+          Resource Indicator Response Parameter for OAuth 2.0
+              draft-skokan-oauth-resource-response-latest
+
+Abstract
+
+   This document defines the resource parameter for OAuth 2.0 access
+   token responses, enabling an authorization server to indicate to the
+   client the resource(s) which an issued access token is for.  It
+   updates "Resource Indicators for OAuth 2.0" (RFC 8707).
+
+About This Document
+
+   This note is to be removed before publishing as an RFC.
+
+   The latest revision of this draft can be found at
+   https://panva.github.io/draft-oauth-rfc8707bis/draft-skokan-oauth-
+   resource-response.html.  Status information for this document may be
+   found at https://datatracker.ietf.org/doc/draft-skokan-oauth-
+   resource-response/.
+
+   Discussion of this document takes place on the Web Authorization
+   Protocol Working Group mailing list (mailto:oauth@ietf.org), which is
+   archived at https://mailarchive.ietf.org/arch/browse/oauth/.
+   Subscribe at https://www.ietf.org/mailman/listinfo/oauth/.
+
+   Source for this draft and an issue tracker can be found at
+   https://github.com/panva/draft-oauth-rfc8707bis.
+
+Status of This Memo
+
+   This Internet-Draft is submitted in full conformance with the
+   provisions of BCP 78 and BCP 79.
+
+   Internet-Drafts are working documents of the Internet Engineering
+   Task Force (IETF).  Note that other groups may also distribute
+   working documents as Internet-Drafts.  The list of current Internet-
+   Drafts is at https://datatracker.ietf.org/drafts/current/.
+
+   Internet-Drafts are draft documents valid for a maximum of six months
+   and may be updated, replaced, or obsoleted by other documents at any
+   time.  It is inappropriate to use Internet-Drafts as reference
+   material or to cite them other than as "work in progress."
+
+   This Internet-Draft will expire on 2 September 2026.
+
+Copyright Notice
+
+   Copyright (c) 2026 IETF Trust and the persons identified as the
+   document authors.  All rights reserved.
+
+   This document is subject to BCP 78 and the IETF Trust's Legal
+   Provisions Relating to IETF Documents (https://trustee.ietf.org/
+   license-info) in effect on the date of publication of this document.
+   Please review these documents carefully, as they describe your rights
+   and restrictions with respect to this document.  Code Components
+   extracted from this document must include Revised BSD License text as
+   described in Section 4.e of the Trust Legal Provisions and are
+   provided without warranty as described in the Revised BSD License.
+
+Table of Contents
+
+   1.  Introduction
+     1.1.  Requirements Notation and Conventions
+   2.  Access Token Response Resource Parameter
+   3.  Security Considerations
+   4.  Privacy Considerations
+   5.  IANA Considerations
+     5.1.  OAuth Parameters Registration
+   6.  Normative References
+   Acknowledgments
+   Document History
+   Author's Address
+
+1.  Introduction
+
+   "Resource Indicators for OAuth 2.0" [RFC8707] defines the resource
+   request parameter for use in authorization requests and access token
+   requests, enabling a client to signal the target protected
+   resource(s) to an authorization server.  However, it does not define
+   a corresponding response parameter that would allow the authorization
+   server to communicate back to the client which resource(s) the issued
+   access token is actually for.
+
+   Without a response parameter, a client cannot reliably determine the
+   effective resource(s) of an issued access token when the
+   authorization server restricts the token to a subset of the requested
+   resources, or when it applies a default resource policy in cases
+   where the client did not include the resource parameter in its
+   request.
+
+   This document addresses that gap by defining the resource parameter
+   for use in access token responses.
+
+1.1.  Requirements Notation and Conventions
+
+   The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
+   "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and
+   "OPTIONAL" in this document are to be interpreted as described in
+   BCP 14 [RFC2119] [RFC8174] when, and only when, they appear in all
+   capitals, as shown here.
+
+2.  Access Token Response Resource Parameter
+
+   In access token responses, the resource parameter is represented as a
+   JSON array of strings, unlike the repeated form-encoded or query
+   parameter used in requests defined in [RFC8707].
+
+   The resource parameter defined for an access token response
+   (Section 5.1 of [RFC6749]) is used to indicate to the client the
+   resource(s) which an issued access token is for.
+
+   resource:  OPTIONAL, if identical to the resource value(s) requested
+      by the client; otherwise, REQUIRED.  Its value is a JSON array of
+      strings, where each string is an absolute URI as specified by
+      Section 4.3 of [RFC3986], identifying a protected resource for
+      which the access token is valid.  The array MUST contain at least
+      one value.
+
+   The resource response parameter serves a similar role to the scope
+   response parameter defined in Section 5.1 of [RFC6749]: it informs
+   the client when the resource(s) associated with the issued access
+   token differ from what the client requested.  This can occur when the
+   authorization server restricts the token to a subset of the requested
+   resources, or when the authorization server applies a default
+   resource policy in cases where the client did not include the
+   resource parameter in its request.
+
+   If the client requested access to multiple resources but the
+   authorization server issues an access token that is restricted to a
+   subset of those resources, the authorization server MUST include the
+   resource parameter in the response to inform the client of the
+   effective resource(s).  The client can then make additional token
+   requests for the remaining resources as needed.
+
+   The following is a non-normative example of a token endpoint response
+   where the authorization server indicates that the issued access token
+   is valid for use at https://cal.example.com/ (extra line breaks and
+   indentation are for display purposes only).
+
+   HTTP/1.1 200 OK
+   Content-Type: application/json
+   Cache-Control: no-cache, no-store
+
+   {
+      "access_token":"eyJhbGciOiJFUzI1NiIsImtpZCI6Ijc3In0.eyJpc3MiOi
+       JodHRwOi8vYXV0aG9yaXphdGlvbi1zZXJ2ZXIuZXhhbXBsZS5jb20iLCJzdWI
+       iOiJfX2JfYyIsImV4cCI6MTU4ODQyMDgwMCwic2NvcGUiOiJjYWxlbmRhciIs
+       ImF1ZCI6Imh0dHBzOi8vY2FsLmV4YW1wbGUuY29tLyJ9.nNWJ2dXSxaDRdMUK
+       lzs-cYIj8MDoM6Gy7pf_sKrLGsAFf1C2bDhB60DQfW1DZL5npdko1_Mmk5sUf
+       zkiQNVpYw",
+      "token_type":"Bearer",
+      "expires_in":3600,
+      "refresh_token":"4LTC8lb0acc6Oy4esc1Nk9BWC0imAwH7kic16BDC2",
+      "scope":"calendar",
+      "resource":["https://cal.example.com/"]
+   }
+
+               Figure 1: Access Token Response with Resource
+
+3.  Security Considerations
+
+   This document inherits the security considerations of [RFC8707].
+
+   Knowledge of the resource(s) for which an access token is valid does
+   not introduce new security concerns for the client.  The resource
+   response parameter merely makes explicit information that the client
+   either already requested or that the authorization server determined
+   based on its policy.
+
+4.  Privacy Considerations
+
+   The resource response parameter conveys information about the
+   resource(s) associated with an access token back to the client.
+   Since the client either requested these resources or they were
+   determined by authorization server policy, no new privacy-sensitive
+   information is disclosed by this parameter.
+
+5.  IANA Considerations
+
+5.1.  OAuth Parameters Registration
+
+   This specification updates the following value in the IANA "OAuth
+   Parameters" registry [IANA.OAuth.Parameters] established by
+   [RFC6749].
+
+   Parameter name:  resource
+   Parameter usage location:  authorization request, token request,
+      token response
+   Change controller:  IETF
+   Specification document(s):  Section 2 of [RFC8707] and Section 2 of
+      this document
+
+6.  Normative References
+
+   [IANA.OAuth.Parameters]
+              IANA, "OAuth Parameters",
+              <https://www.iana.org/assignments/oauth-parameters>.
+
+   [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
+              Requirement Levels", BCP 14, RFC 2119,
+              DOI 10.17487/RFC2119, March 1997,
+              <https://www.rfc-editor.org/rfc/rfc2119>.
+
+   [RFC3986]  Berners-Lee, T., Fielding, R., and L. Masinter, "Uniform
+              Resource Identifier (URI): Generic Syntax", STD 66,
+              RFC 3986, DOI 10.17487/RFC3986, January 2005,
+              <https://www.rfc-editor.org/rfc/rfc3986>.
+
+   [RFC6749]  Hardt, D., Ed., "The OAuth 2.0 Authorization Framework",
+              RFC 6749, DOI 10.17487/RFC6749, October 2012,
+              <https://www.rfc-editor.org/rfc/rfc6749>.
+
+   [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
+              2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
+              May 2017, <https://www.rfc-editor.org/rfc/rfc8174>.
+
+   [RFC8707]  Campbell, B., Bradley, J., and H. Tschofenig, "Resource
+              Indicators for OAuth 2.0", RFC 8707, DOI 10.17487/RFC8707,
+              February 2020, <https://www.rfc-editor.org/rfc/rfc8707>.
+
+Acknowledgments
+
+   The original "Resource Indicators for OAuth 2.0" specification
+   [RFC8707] was authored by Brian Campbell, John Bradley, and Hannes
+   Tschofenig.
+
+Document History
+
+   draft-skokan-oauth-resource-response-00
+
+   *  Initial draft defining the resource access token response
+      parameter
+
+Author's Address
+
+   Filip Skokan
+   Okta
+   Email: panva.ip@gmail.com
