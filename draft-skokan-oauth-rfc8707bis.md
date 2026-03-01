@@ -39,7 +39,7 @@ author:
     email: ve7jtb@ve7jtb.com
  -
     fullname: Hannes Tschofenig
-    organization: Arm Limited
+    organization: H-BRS
     email: hannes.tschofenig@gmx.net
 
 normative:
