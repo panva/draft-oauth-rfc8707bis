@@ -65,9 +65,12 @@ informative:
 --- abstract
 
 This document specifies an extension to the OAuth 2.0 Authorization
-Framework defining request parameters that enable a client to explicitly
-signal to an authorization server about the identity of the protected
-resource(s) to which it is requesting access.
+Framework defining a request parameter that enables a client to
+explicitly signal to an authorization server about the identity of the
+protected resource(s) to which it is requesting access. It also defines
+a corresponding response parameter that enables the authorization
+server to indicate to the client the resource(s) which an issued
+access token is for.
 
 
 --- middle
@@ -138,6 +141,9 @@ This specification uses the terms "access token", "refresh token",
 "client" defined by The OAuth 2.0 Authorization Framework {{RFC6749}}.
 
 # Resource Parameter {#ResourceParameter}
+
+This section defines the `resource` parameter for use in authorization
+requests, access token requests, and access token responses.
 
 In requests to the authorization server, a client MAY indicate the
 protected resource (a.k.a. resource server, application, API, etc.) to
@@ -405,6 +411,69 @@ Cache-Control: no-cache, no-store
 ~~~
 {: #response-example-rt title="Access Token Response"}
 
+## Access Token Response
+
+In access token responses, the `resource` parameter is represented as a
+JSON array of strings, unlike the repeated form-encoded or query
+parameter used in requests.
+
+The `resource` parameter defined for an access token response
+({{Section 5.1 of RFC6749}}) is used to indicate to the client the
+resource(s) which an issued access token is for.
+
+resource:
+: OPTIONAL, if identical to the `resource` value(s)
+  requested by the client; otherwise, REQUIRED. Its value is
+  a JSON array of strings, where each string is an absolute
+  URI as specified by {{Section 4.3 of RFC3986}},
+  identifying a protected resource for which the access
+  token is valid. The array MUST contain at least one value.
+
+The `resource` response parameter serves a similar role to
+the `scope` response parameter defined in
+{{Section 5.1 of RFC6749}}: it informs the client when the
+resource(s) associated with the issued access token differ
+from what the client requested. This can occur when the
+authorization server restricts the token to a subset of
+the requested resources, or when the authorization server
+applies a default resource policy in cases where the client
+did not include the `resource` parameter in its request.
+
+If the client requested access to multiple resources but
+the authorization server issues an access token that is
+restricted to a subset of those resources, the
+authorization server MUST include the `resource` parameter
+in the response to inform the client of the effective
+resource(s). The client can then make additional token
+requests for the remaining resources as needed.
+
+The following is a non-normative example of a token
+endpoint response where the authorization server indicates
+that the issued access token is valid for use at
+`https://cal.example.com/` (extra line breaks and
+indentation are for display purposes only).
+
+~~~
+HTTP/1.1 200 OK
+Content-Type: application/json
+Cache-Control: no-cache, no-store
+
+{
+   "access_token":"eyJhbGciOiJFUzI1NiIsImtpZCI6Ijc3In0.eyJpc3MiOi
+    JodHRwOi8vYXV0aG9yaXphdGlvbi1zZXJ2ZXIuZXhhbXBsZS5jb20iLCJzdWI
+    iOiJfX2JfYyIsImV4cCI6MTU4ODQyMDgwMCwic2NvcGUiOiJjYWxlbmRhciIs
+    ImF1ZCI6Imh0dHBzOi8vY2FsLmV4YW1wbGUuY29tLyJ9.nNWJ2dXSxaDRdMUK
+    lzs-cYIj8MDoM6Gy7pf_sKrLGsAFf1C2bDhB60DQfW1DZL5npdko1_Mmk5sUf
+    zkiQNVpYw",
+   "token_type":"Bearer",
+   "expires_in":3600,
+   "refresh_token":"4LTC8lb0acc6Oy4esc1Nk9BWC0imAwH7kic16BDC2",
+   "scope":"calendar",
+   "resource":["https://cal.example.com/"]
+}
+~~~
+{: #response-example-resource title="Access Token Response with Resource"}
+
 # Security Considerations
 
 An audience-restricted access token that is legitimately presented to a
@@ -467,7 +536,7 @@ Parameter name:
 : resource
 
 Parameter usage location:
-: authorization request, token request
+: authorization request, token request, token response
 
 Change controller:
 : IETF
@@ -521,6 +590,7 @@ Filip Skokan, Éric Vyncke, and Hans Zandbelt.
 
 draft-skokan-oauth-rfc8707bis-01
 
+- Added `resource` token endpoint response parameter
 - Added Filip Skokan as editor
 - Updated Brian Campbell's email address
 - Updated Hannes Tschofenig's affiliation
