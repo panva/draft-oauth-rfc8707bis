@@ -2,14 +2,14 @@
 
 
 
-Web Authorization Protocol                                   B. Campbell
-Internet-Draft                                             Ping Identity
-Obsoletes: 8707 (if approved)                                 J. Bradley
-Intended status: Standards Track                                  Yubico
-Expires: 2 September 2026                                  H. Tschofenig
+Web Authorization Protocol                                     F. Skokan
+Internet-Draft                                                      Okta
+Obsoletes: 8707 (if approved)                                B. Campbell
+Intended status: Standards Track                           Ping Identity
+Expires: 2 September 2026                                     J. Bradley
+                                                                  Yubico
+                                                           H. Tschofenig
                                                                    H-BRS
-                                                               F. Skokan
-                                                                    Okta
                                                             1 March 2026
 
 
@@ -658,6 +658,11 @@ Document History
 
 Authors' Addresses
 
+   Filip Skokan
+   Okta
+   Email: panva.ip@gmail.com
+
+
    Brian Campbell
    Ping Identity
    Email: bcampbell@pingidentity.com
@@ -671,8 +676,3 @@ Authors' Addresses
    Hannes Tschofenig
    H-BRS
    Email: hannes.tschofenig@gmx.net
-
-
-   Filip Skokan
-   Okta
-   Email: panva.ip@gmail.com
