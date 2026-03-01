@@ -2,14 +2,14 @@
 
 
 
-Web Authorization Protocol                                     F. Skokan
-Internet-Draft                                                      Okta
-Obsoletes: 8707 (if approved)                                B. Campbell
-Intended status: Standards Track                           Ping Identity
-Expires: 2 September 2026                                     J. Bradley
-                                                                  Yubico
-                                                           H. Tschofenig
+Web Authorization Protocol                                   B. Campbell
+Internet-Draft                                             Ping Identity
+Obsoletes: 8707 (if approved)                                 J. Bradley
+Intended status: Standards Track                                  Yubico
+Expires: 2 September 2026                                  H. Tschofenig
                                                                    H-BRS
+                                                               F. Skokan
+                                                                    Okta
                                                             1 March 2026
 
 
@@ -19,9 +19,12 @@ Expires: 2 September 2026                                     J. Bradley
 Abstract
 
    This document specifies an extension to the OAuth 2.0 Authorization
-   Framework defining request parameters that enable a client to
+   Framework defining a request parameter that enables a client to
    explicitly signal to an authorization server about the identity of
-   the protected resource(s) to which it is requesting access.
+   the protected resource(s) to which it is requesting access.  It also
+   defines a corresponding response parameter that enables the
+   authorization server to indicate to the client the resource(s) which
+   an issued access token is for.
 
 About This Document
 
@@ -162,6 +165,9 @@ Table of Contents
 
 2.  Resource Parameter
 
+   This section defines the resource parameter for use in authorization
+   requests, access token requests, and access token responses.
+
    In requests to the authorization server, a client MAY indicate the
    protected resource (a.k.a. resource server, application, API, etc.)
    to which it is requesting access by including the following parameter
@@ -208,15 +214,6 @@ Table of Contents
    https://apps.example.com/scim/ as the resource so that the issued
    access token is valid for all the endpoints of the SCIM API.
 
-   The following error code is provided for an authorization server to
-   indicate problems with the requested resource(s) in response to an
-   authorization request or access token request.  It can also be used
-   to inform the client that it has requested an invalid combination of
-   resource and scope.
-
-   invalid_target:  The requested resource is invalid, missing, unknown,
-      or malformed.
-
    The authorization server SHOULD audience-restrict issued access
    tokens to the resource(s) indicated by the resource parameter.
    Audience restrictions can be communicated in JSON Web Tokens
@@ -226,6 +223,15 @@ Table of Contents
    the exact resource value as the audience or it may map from that
    value to a more general URI or abstract identifier for the given
    resource.
+
+   The following error code is provided for an authorization server to
+   indicate problems with the requested resource(s) in response to an
+   authorization request or access token request.  It can also be used
+   to inform the client that it has requested an invalid combination of
+   resource and scope.
+
+   invalid_target:  The requested resource is invalid, missing, unknown,
+      or malformed.
 
 2.1.  Authorization Request
 
@@ -409,6 +415,10 @@ Table of Contents
                       Figure 6: Access Token Response
 
 2.3.  Access Token Response
+
+   In access token responses, the resource parameter is represented as a
+   JSON array of strings, unlike the repeated form-encoded or query
+   parameter used in requests.
 
    The resource parameter defined for an access token response
    (Section 5.1 of [RFC6749]) is used to indicate the resource(s) for
@@ -617,6 +627,9 @@ Document History
 
    *  Added resource token endpoint response parameter
 
+   *  Repositioned invalid_target error code definition after audience
+      restriction guidance
+
    *  Added Filip Skokan as editor
 
    *  Updated Brian Campbell's email address
@@ -645,11 +658,6 @@ Document History
 
 Authors' Addresses
 
-   Filip Skokan
-   Okta
-   Email: panva.ip@gmail.com
-
-
    Brian Campbell
    Ping Identity
    Email: bcampbell@pingidentity.com
@@ -663,3 +671,8 @@ Authors' Addresses
    Hannes Tschofenig
    H-BRS
    Email: hannes.tschofenig@gmx.net
+
+
+   Filip Skokan
+   Okta
+   Email: panva.ip@gmail.com

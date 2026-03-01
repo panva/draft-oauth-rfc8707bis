@@ -5,15 +5,18 @@
 <meta content="Common,Latin" name="scripts">
 <meta content="initial-scale=1.0" name="viewport">
 <title>Resource Indicators for OAuth 2.0</title>
-<meta content="Filip Skokan" name="author">
 <meta content="Brian Campbell" name="author">
 <meta content="John Bradley" name="author">
 <meta content="Hannes Tschofenig" name="author">
+<meta content="Filip Skokan" name="author">
 <meta content="
        This document specifies an extension to the OAuth 2.0 Authorization
-Framework defining request parameters that enable a client to explicitly
-signal to an authorization server about the identity of the protected
-resource(s) to which it is requesting access. 
+Framework defining a request parameter that enables a client to
+explicitly signal to an authorization server about the identity of the
+protected resource(s) to which it is requesting access. It also defines
+a corresponding response parameter that enables the authorization
+server to indicate to the client the resource(s) which an issued
+access token is for. 
     " name="description">
 <meta content="xml2rfc 3.31.0" name="generator">
 <meta content="OAuth" name="keyword">
@@ -1056,7 +1059,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <td class="right">March 2026</td>
 </tr></thead>
 <tfoot><tr>
-<td class="left">Skokan, et al.</td>
+<td class="left">Campbell, et al.</td>
 <td class="center">Expires 2 September 2026</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
@@ -1082,10 +1085,6 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
-      <div class="author-name">F. Skokan</div>
-<div class="org">Okta</div>
-</div>
-<div class="author">
       <div class="author-name">B. Campbell</div>
 <div class="org">Ping Identity</div>
 </div>
@@ -1097,6 +1096,10 @@ svg :is([fill="white"], [fill^="#fff"]) {
       <div class="author-name">H. Tschofenig</div>
 <div class="org">H-BRS</div>
 </div>
+<div class="author">
+      <div class="author-name">F. Skokan</div>
+<div class="org">Okta</div>
+</div>
 </dd>
 </dl>
 </div>
@@ -1104,9 +1107,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <section id="section-abstract">
       <h2 id="abstract"><a href="#abstract" class="selfRef">Abstract</a></h2>
 <p id="section-abstract-1">This document specifies an extension to the OAuth 2.0 Authorization
-Framework defining request parameters that enable a client to explicitly
-signal to an authorization server about the identity of the protected
-resource(s) to which it is requesting access.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
+Framework defining a request parameter that enables a client to
+explicitly signal to an authorization server about the identity of the
+protected resource(s) to which it is requesting access. It also defines
+a corresponding response parameter that enables the authorization
+server to indicate to the client the resource(s) which an issued
+access token is for.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
 </section>
 <section class="note rfcEditorRemove" id="section-note.1">
       <h2 id="name-about-this-document">
@@ -1319,14 +1325,16 @@ appear in all capitals, as shown here.<a href="#section-1.1-1" class="pilcrow">�
       <h2 id="name-resource-parameter">
 <a href="#section-2" class="section-number selfRef">2. </a><a href="#name-resource-parameter" class="section-name selfRef">Resource Parameter</a>
       </h2>
-<p id="section-2-1">In requests to the authorization server, a client <span class="bcp14">MAY</span> indicate the
+<p id="section-2-1">This section defines the <code>resource</code> parameter for use in authorization
+requests, access token requests, and access token responses.<a href="#section-2-1" class="pilcrow">¶</a></p>
+<p id="section-2-2">In requests to the authorization server, a client <span class="bcp14">MAY</span> indicate the
 protected resource (a.k.a. resource server, application, API, etc.) to
 which it is requesting access by including the following parameter in
-the request.<a href="#section-2-1" class="pilcrow">¶</a></p>
-<span class="break"></span><dl class="dlParallel" id="section-2-2">
-        <dt id="section-2-2.1">resource:</dt>
-        <dd style="margin-left: 1.5em" id="section-2-2.2">
-          <p id="section-2-2.2.1">Indicates the target service or resource to which access is
+the request.<a href="#section-2-2" class="pilcrow">¶</a></p>
+<span class="break"></span><dl class="dlParallel" id="section-2-3">
+        <dt id="section-2-3.1">resource:</dt>
+        <dd style="margin-left: 1.5em" id="section-2-3.2">
+          <p id="section-2-3.2.1">Indicates the target service or resource to which access is
 being requested.  Its value <span class="bcp14">MUST</span> be an absolute URI, as
 specified by <span><a href="https://rfc-editor.org/rfc/rfc3986#section-4.3" class="relref">Section 4.3</a> of [<a href="#RFC3986" class="cite xref">RFC3986</a>]</span>.  The URI <span class="bcp14">MUST NOT</span>
 include a fragment component. It <span class="bcp14">SHOULD NOT</span> include a query
@@ -1339,18 +1347,18 @@ resource, which <span class="bcp14">MAY</span> be a locator that corresponds to 
 network-addressable location where the target resource is
 hosted.  Multiple <code>resource</code> parameters <span class="bcp14">MAY</span> be used to
 indicate that the requested token is intended to be used at
-multiple resources.<a href="#section-2-2.2.1" class="pilcrow">¶</a></p>
+multiple resources.<a href="#section-2-3.2.1" class="pilcrow">¶</a></p>
 </dd>
       <dd class="break"></dd>
 </dl>
-<p id="section-2-3">The parameter value identifies a resource to which the client is
+<p id="section-2-4">The parameter value identifies a resource to which the client is
 requesting access.  The parameter can carry the location of a protected
 resource, typically as an https URL or a more abstract identifier.  This
 enables the authorization server to apply policy as appropriate for the
 resource, such as determining the type and content of tokens to be
 issued, if and how tokens are encrypted, and applying appropriate
-audience restrictions.<a href="#section-2-3" class="pilcrow">¶</a></p>
-<p id="section-2-4">The client <span class="bcp14">SHOULD</span> provide the most specific URI that it can for
+audience restrictions.<a href="#section-2-4" class="pilcrow">¶</a></p>
+<p id="section-2-5">The client <span class="bcp14">SHOULD</span> provide the most specific URI that it can for
 the complete API or set of resources it intends to access. In
 practice, a client will know a base URI for the application or
 resource that it interacts with, which is appropriate to use as
@@ -1369,27 +1377,27 @@ endpoints such as <code>https://apps.example.com/scim/Users</code>,
 <code>https://apps.example.com/scim/Schemas</code>. The client would use
 <code>https://apps.example.com/scim/</code> as the resource so that the
 issued access token is valid for all the endpoints of the SCIM
-API.<a href="#section-2-4" class="pilcrow">¶</a></p>
-<p id="section-2-5">The following error code is provided for an authorization server to
-indicate problems with the requested resource(s) in response to an
-authorization request or access token request. It can also be used to
-inform the client that it has requested an invalid combination of
-resource and scope.<a href="#section-2-5" class="pilcrow">¶</a></p>
-<span class="break"></span><dl class="dlParallel" id="section-2-6">
-        <dt id="section-2-6.1">invalid_target:</dt>
-        <dd style="margin-left: 1.5em" id="section-2-6.2">
-          <p id="section-2-6.2.1">The requested resource is invalid, missing, unknown, or malformed.<a href="#section-2-6.2.1" class="pilcrow">¶</a></p>
-</dd>
-      <dd class="break"></dd>
-</dl>
-<p id="section-2-7">The authorization server <span class="bcp14">SHOULD</span> audience-restrict issued access tokens
+API.<a href="#section-2-5" class="pilcrow">¶</a></p>
+<p id="section-2-6">The authorization server <span class="bcp14">SHOULD</span> audience-restrict issued access tokens
 to the resource(s) indicated by the <code>resource</code> parameter. Audience
 restrictions can be communicated in JSON Web Tokens <span>[<a href="#RFC7519" class="cite xref">RFC7519</a>]</span> with the
 <code>aud</code> claim and the top-level member of the same name provides the
 audience restriction information in a Token Introspection <span>[<a href="#RFC7662" class="cite xref">RFC7662</a>]</span>
 response. The authorization server may use the exact <code>resource</code> value as
 the audience or it may map from that value to a more general URI or
-abstract identifier for the given resource.<a href="#section-2-7" class="pilcrow">¶</a></p>
+abstract identifier for the given resource.<a href="#section-2-6" class="pilcrow">¶</a></p>
+<p id="section-2-7">The following error code is provided for an authorization server to
+indicate problems with the requested resource(s) in response to an
+authorization request or access token request. It can also be used to
+inform the client that it has requested an invalid combination of
+resource and scope.<a href="#section-2-7" class="pilcrow">¶</a></p>
+<span class="break"></span><dl class="dlParallel" id="section-2-8">
+        <dt id="section-2-8.1">invalid_target:</dt>
+        <dd style="margin-left: 1.5em" id="section-2-8.2">
+          <p id="section-2-8.2.1">The requested resource is invalid, missing, unknown, or malformed.<a href="#section-2-8.2.1" class="pilcrow">¶</a></p>
+</dd>
+      <dd class="break"></dd>
+</dl>
 <div id="authorization-request">
 <section id="section-2.1">
         <h3 id="name-authorization-request">
@@ -1628,22 +1636,25 @@ Cache-Control: no-cache, no-store
         <h3 id="name-access-token-response-3">
 <a href="#section-2.3" class="section-number selfRef">2.3. </a><a href="#name-access-token-response-3" class="section-name selfRef">Access Token Response</a>
         </h3>
-<p id="section-2.3-1">The <code>resource</code> parameter defined for an access token response
+<p id="section-2.3-1">In access token responses, the <code>resource</code> parameter is represented as a
+JSON array of strings, unlike the repeated form-encoded or query
+parameter used in requests.<a href="#section-2.3-1" class="pilcrow">¶</a></p>
+<p id="section-2.3-2">The <code>resource</code> parameter defined for an access token response
 (<span><a href="https://rfc-editor.org/rfc/rfc6749#section-5.1" class="relref">Section 5.1</a> of [<a href="#RFC6749" class="cite xref">RFC6749</a>]</span>) is used to indicate the
-resource(s) for which the issued access token is valid.<a href="#section-2.3-1" class="pilcrow">¶</a></p>
-<span class="break"></span><dl class="dlParallel" id="section-2.3-2">
-          <dt id="section-2.3-2.1">resource:</dt>
-          <dd style="margin-left: 1.5em" id="section-2.3-2.2">
-            <p id="section-2.3-2.2.1"><span class="bcp14">OPTIONAL</span>, if identical to the <code>resource</code> value(s)
+resource(s) for which the issued access token is valid.<a href="#section-2.3-2" class="pilcrow">¶</a></p>
+<span class="break"></span><dl class="dlParallel" id="section-2.3-3">
+          <dt id="section-2.3-3.1">resource:</dt>
+          <dd style="margin-left: 1.5em" id="section-2.3-3.2">
+            <p id="section-2.3-3.2.1"><span class="bcp14">OPTIONAL</span>, if identical to the <code>resource</code> value(s)
 requested by the client; otherwise, <span class="bcp14">REQUIRED</span>. Its value is
 a JSON array of strings, where each string is an absolute
 URI as specified by <span><a href="https://rfc-editor.org/rfc/rfc3986#section-4.3" class="relref">Section 4.3</a> of [<a href="#RFC3986" class="cite xref">RFC3986</a>]</span>,
 identifying a protected resource for which the access
-token is valid. The array <span class="bcp14">MUST</span> contain at least one value.<a href="#section-2.3-2.2.1" class="pilcrow">¶</a></p>
+token is valid. The array <span class="bcp14">MUST</span> contain at least one value.<a href="#section-2.3-3.2.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
 </dl>
-<p id="section-2.3-3">The <code>resource</code> response parameter serves a similar role to
+<p id="section-2.3-4">The <code>resource</code> response parameter serves a similar role to
 the <code>scope</code> response parameter defined in
 <span><a href="https://rfc-editor.org/rfc/rfc6749#section-5.1" class="relref">Section 5.1</a> of [<a href="#RFC6749" class="cite xref">RFC6749</a>]</span>: it informs the client when the
 resource(s) associated with the issued access token differ
@@ -1651,22 +1662,22 @@ from what the client requested. This can occur when the
 authorization server restricts the token to a subset of
 the requested resources, or when the authorization server
 applies a default resource policy in cases where the client
-did not include the <code>resource</code> parameter in its request.<a href="#section-2.3-3" class="pilcrow">¶</a></p>
-<p id="section-2.3-4">If the client requested access to multiple resources but
+did not include the <code>resource</code> parameter in its request.<a href="#section-2.3-4" class="pilcrow">¶</a></p>
+<p id="section-2.3-5">If the client requested access to multiple resources but
 the authorization server issues an access token that is
 restricted to a subset of those resources, the
 authorization server <span class="bcp14">MUST</span> include the <code>resource</code> parameter
 in the response to inform the client of the effective
 resource(s). The client can then make additional token
-requests for the remaining resources as needed.<a href="#section-2.3-4" class="pilcrow">¶</a></p>
-<p id="section-2.3-5">The following is a non-normative example of a token
+requests for the remaining resources as needed.<a href="#section-2.3-5" class="pilcrow">¶</a></p>
+<p id="section-2.3-6">The following is a non-normative example of a token
 endpoint response where the authorization server indicates
 that the issued access token is valid for use at
 <code>https://cal.example.com/</code> (extra line breaks and
-indentation are for display purposes only).<a href="#section-2.3-5" class="pilcrow">¶</a></p>
+indentation are for display purposes only).<a href="#section-2.3-6" class="pilcrow">¶</a></p>
 <span id="name-access-token-response-with-"></span><div id="response-example-resource">
 <figure id="figure-7">
-          <div class="alignLeft art-text artwork" id="section-2.3-6.1">
+          <div class="alignLeft art-text artwork" id="section-2.3-7.1">
 <pre>
 HTTP/1.1 200 OK
 Content-Type: application/json
@@ -1923,36 +1934,40 @@ Filip Skokan, Éric Vyncke, and Hans Zandbelt.<a href="#appendix-A-2" class="pil
           <p id="appendix-B-2.1.1">Added <code>resource</code> token endpoint response parameter<a href="#appendix-B-2.1.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-B-2.2">
-          <p id="appendix-B-2.2.1">Added Filip Skokan as editor<a href="#appendix-B-2.2.1" class="pilcrow">¶</a></p>
+          <p id="appendix-B-2.2.1">Repositioned <code>invalid_target</code> error code definition after
+audience restriction guidance<a href="#appendix-B-2.2.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-B-2.3">
-          <p id="appendix-B-2.3.1">Updated Brian Campbell's email address<a href="#appendix-B-2.3.1" class="pilcrow">¶</a></p>
+          <p id="appendix-B-2.3.1">Added Filip Skokan as editor<a href="#appendix-B-2.3.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-B-2.4">
-          <p id="appendix-B-2.4.1">Updated Hannes Tschofenig's affiliation<a href="#appendix-B-2.4.1" class="pilcrow">¶</a></p>
+          <p id="appendix-B-2.4.1">Updated Brian Campbell's email address<a href="#appendix-B-2.4.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-B-2.5">
-          <p id="appendix-B-2.5.1">Applied verified erratum 6810<a href="#appendix-B-2.5.1" class="pilcrow">¶</a></p>
+          <p id="appendix-B-2.5.1">Updated Hannes Tschofenig's affiliation<a href="#appendix-B-2.5.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-B-2.6">
-          <p id="appendix-B-2.6.1">Replaced JWT-SAR reference alias with <span>[<a href="#RFC9101" class="cite xref">RFC9101</a>]</span><a href="#appendix-B-2.6.1" class="pilcrow">¶</a></p>
+          <p id="appendix-B-2.6.1">Applied verified erratum 6810<a href="#appendix-B-2.6.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-B-2.7">
-          <p id="appendix-B-2.7.1">Added <span>[<a href="#RFC8707" class="cite xref">RFC8707</a>]</span> as an informative reference<a href="#appendix-B-2.7.1" class="pilcrow">¶</a></p>
+          <p id="appendix-B-2.7.1">Replaced JWT-SAR reference alias with <span>[<a href="#RFC9101" class="cite xref">RFC9101</a>]</span><a href="#appendix-B-2.7.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-B-2.8">
-          <p id="appendix-B-2.8.1">Removed unused section anchors<a href="#appendix-B-2.8.1" class="pilcrow">¶</a></p>
+          <p id="appendix-B-2.8.1">Added <span>[<a href="#RFC8707" class="cite xref">RFC8707</a>]</span> as an informative reference<a href="#appendix-B-2.8.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-B-2.9">
-          <p id="appendix-B-2.9.1">Removed unnecessary BCP14 keyword bolding<a href="#appendix-B-2.9.1" class="pilcrow">¶</a></p>
+          <p id="appendix-B-2.9.1">Removed unused section anchors<a href="#appendix-B-2.9.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-B-2.10">
-          <p id="appendix-B-2.10.1">Updated IANA registrations change controller to IETF
-and specification documents to cross-reference both
-<span>[<a href="#RFC8707" class="cite xref">RFC8707</a>]</span> and this document<a href="#appendix-B-2.10.1" class="pilcrow">¶</a></p>
+          <p id="appendix-B-2.10.1">Removed unnecessary BCP14 keyword bolding<a href="#appendix-B-2.10.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="appendix-B-2.11">
-          <p id="appendix-B-2.11.1">Updated acknowledgements<a href="#appendix-B-2.11.1" class="pilcrow">¶</a></p>
+          <p id="appendix-B-2.11.1">Updated IANA registrations change controller to IETF
+and specification documents to cross-reference both
+<span>[<a href="#RFC8707" class="cite xref">RFC8707</a>]</span> and this document<a href="#appendix-B-2.11.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-B-2.12">
+          <p id="appendix-B-2.12.1">Updated acknowledgements<a href="#appendix-B-2.12.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
 <p id="appendix-B-3">draft-skokan-oauth-rfc8707bis-00<a href="#appendix-B-3" class="pilcrow">¶</a></p>
@@ -1968,14 +1983,6 @@ and specification documents to cross-reference both
       <h2 id="name-authors-addresses">
 <a href="#name-authors-addresses" class="section-name selfRef">Authors' Addresses</a>
       </h2>
-<address class="vcard">
-        <div dir="auto" class="left"><span class="fn nameRole">Filip Skokan</span></div>
-<div dir="auto" class="left"><span class="org">Okta</span></div>
-<div class="email">
-<span>Email:</span>
-<a href="mailto:panva.ip@gmail.com" class="email">panva.ip@gmail.com</a>
-</div>
-</address>
 <address class="vcard">
         <div dir="auto" class="left"><span class="fn nameRole">Brian Campbell</span></div>
 <div dir="auto" class="left"><span class="org">Ping Identity</span></div>
@@ -1998,6 +2005,14 @@ and specification documents to cross-reference both
 <div class="email">
 <span>Email:</span>
 <a href="mailto:hannes.tschofenig@gmx.net" class="email">hannes.tschofenig@gmx.net</a>
+</div>
+</address>
+<address class="vcard">
+        <div dir="auto" class="left"><span class="fn nameRole">Filip Skokan</span></div>
+<div dir="auto" class="left"><span class="org">Okta</span></div>
+<div class="email">
+<span>Email:</span>
+<a href="mailto:panva.ip@gmail.com" class="email">panva.ip@gmail.com</a>
 </div>
 </address>
 </section>
