@@ -94,6 +94,10 @@ resource:
   which the access token is valid. The array MUST contain at least
   one value.
 
+\[\[TODO: Should the response use `resource` (a JSON string) when a
+single resource is indicated and `resources` (a JSON array of strings)
+when multiple are indicated instead?\]\]
+
 The `resource` response parameter serves a similar role to the `scope`
 response parameter defined in {{Section 5.1 of RFC6749}}: it informs the
 client when the resource(s) associated with the issued access token
