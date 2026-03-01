@@ -57,7 +57,8 @@ informative:
   RFC7519:
   RFC7644:
   RFC7662:
-  JWT-SAR: RFC9101
+  RFC8707:
+  RFC9101:
 
 ...
 
@@ -205,7 +206,7 @@ authorization code) is returned from the authorization endpoint, the
 requested resource is applicable to the full authorization grant.
 
 For an authorization request sent as a JSON Web Token (JWT), such as
-when using the JWT Secured Authorization Request {{JWT-SAR}}, a single
+when using the JWT Secured Authorization Request (JAR) {{RFC9101}}, a single
 `resource` parameter value is represented as a JSON string
 while multiple values are represented as an array of strings.
 
