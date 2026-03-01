@@ -515,3 +515,25 @@ Vladimir Dzhuvinov, George Fletcher, Dick Hardt, Phil Hunt, Michael
 Jones, Benjamin Kaduk, Barry Leiba, Torsten Lodderstedt, Anthony
 Nadalin, Justin Richer, Adam Roach, Nat Sakimura, Rifaat Shekh-Yusef,
 Filip Skokan, Éric Vyncke, and Hans Zandbelt.
+
+# Document History
+{:numbered="false"}
+
+draft-skokan-oauth-rfc8707bis-01
+
+- Added Filip Skokan as editor
+- Updated Brian Campbell's email address
+- Updated Hannes Tschofenig's affiliation
+- Applied verified erratum 6810
+- Replaced JWT-SAR reference alias with {{RFC9101}}
+- Added {{RFC8707}} as an informative reference
+- Removed unused section anchors
+- Removed unnecessary BCP14 keyword bolding
+- Updated IANA registrations change controller to IETF
+  and specification documents to cross-reference both
+  {{RFC8707}} and this document
+- Updated acknowledgements
+
+draft-skokan-oauth-rfc8707bis-00
+
+- Recreation of {{RFC8707}} in markdown
