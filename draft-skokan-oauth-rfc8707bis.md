@@ -469,12 +469,12 @@ Specification document(s):
 # Acknowledgments
 {:numbered="false"}
 
-This specification was developed within the OAuth Working Group
+The original specification {{RFC8707}} was developed within the OAuth Working Group
 under the chairmanship of Hannes Tschofenig
 and Rifaat Shekh-Yusef with Eric Rescorla, Benjamin Kaduk, and Roman Danyliw
 serving as Security Area Directors.  Additionally, the following
 individuals contributed ideas, feedback, and wording
-that helped shape this specification:
+that helped shape that specification:
 
 Vittorio Bertocci,
 Sergey Beryozkin,
