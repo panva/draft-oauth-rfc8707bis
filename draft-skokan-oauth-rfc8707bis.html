@@ -10,7 +10,10 @@
 <meta content="John Bradley" name="author">
 <meta content="Hannes Tschofenig" name="author">
 <meta content="
-       TODO Abstract 
+       This document specifies an extension to the OAuth 2.0 Authorization
+Framework defining request parameters that enable a client to explicitly
+signal to an authorization server about the identity of the protected
+resource(s) to which it is requesting access. 
     " name="description">
 <meta content="xml2rfc 3.31.0" name="generator">
 <meta content="OAuth" name="keyword">
@@ -1050,11 +1053,11 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <thead><tr>
 <td class="left">Internet-Draft</td>
 <td class="center">OAuth Resource Indicators</td>
-<td class="right">February 2026</td>
+<td class="right">March 2026</td>
 </tr></thead>
 <tfoot><tr>
 <td class="left">Skokan, et al.</td>
-<td class="center">Expires 1 September 2026</td>
+<td class="center">Expires 2 September 2026</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1062,7 +1065,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <div id="internal-metadata" class="document-information">
 <dl id="identifiers">
 <dt class="label-workgroup">Workgroup:</dt>
-<dd class="workgroup">OAuth Working Group</dd>
+<dd class="workgroup">Web Authorization Protocol</dd>
 <dt class="label-internet-draft">Internet-Draft:</dt>
 <dd class="internet-draft">draft-skokan-oauth-rfc8707bis-latest</dd>
 <dt class="label-obsoletes">Obsoletes:</dt>
@@ -1070,12 +1073,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <a href="https://www.rfc-editor.org/rfc/rfc8707" class="eref">8707</a> (if approved)</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2026-02-28" class="published">28 February 2026</time>
+<time datetime="2026-03-01" class="published">1 March 2026</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2026-09-01">1 September 2026</time></dd>
+<dd class="expires"><time datetime="2026-09-02">2 September 2026</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1100,7 +1103,10 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <h1 id="title">Resource Indicators for OAuth 2.0</h1>
 <section id="section-abstract">
       <h2 id="abstract"><a href="#abstract" class="selfRef">Abstract</a></h2>
-<p id="section-abstract-1">TODO Abstract<a href="#section-abstract-1" class="pilcrow">¶</a></p>
+<p id="section-abstract-1">This document specifies an extension to the OAuth 2.0 Authorization
+Framework defining request parameters that enable a client to explicitly
+signal to an authorization server about the identity of the protected
+resource(s) to which it is requesting access.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
 </section>
 <section class="note rfcEditorRemove" id="section-note.1">
       <h2 id="name-about-this-document">
@@ -1112,7 +1118,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
         Status information for this document may be found at <span><a href="https://datatracker.ietf.org/doc/draft-skokan-oauth-rfc8707bis/">https://datatracker.ietf.org/doc/draft-skokan-oauth-rfc8707bis/</a></span>.<a href="#section-note.1-2" class="pilcrow">¶</a></p>
 <p id="section-note.1-3">
         Discussion of this document takes place on the
-        OAuth Working Group mailing list (<span><a href="mailto:oauth@ietf.org">mailto:oauth@ietf.org</a></span>),
+        Web Authorization Protocol Working Group mailing list (<span><a href="mailto:oauth@ietf.org">mailto:oauth@ietf.org</a></span>),
         which is archived at <span><a href="https://mailarchive.ietf.org/arch/browse/oauth/">https://mailarchive.ietf.org/arch/browse/oauth/</a></span>.
         Subscribe at <span><a href="https://www.ietf.org/mailman/listinfo/oauth/">https://www.ietf.org/mailman/listinfo/oauth/</a></span>.<a href="#section-note.1-3" class="pilcrow">¶</a></p>
 <p id="section-note.1-4">Source for this draft and an issue tracker can be found at
@@ -1137,7 +1143,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 1 September 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 2 September 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1168,24 +1174,65 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <nav class="toc"><ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.1">
             <p id="section-toc.1-1.1.1" class="keepWithNext"><a href="#section-1" class="auto internal xref">1</a>.  <a href="#name-introduction" class="internal xref">Introduction</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.1.2.1">
+                <p id="section-toc.1-1.1.2.1.1" class="keepWithNext"><a href="#section-1.1" class="auto internal xref">1.1</a>.  <a href="#name-requirements-notation-and-c" class="internal xref">Requirements Notation and Conventions</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.1.2.2">
+                <p id="section-toc.1-1.1.2.2.1" class="keepWithNext"><a href="#section-1.2" class="auto internal xref">1.2</a>.  <a href="#name-terminology" class="internal xref">Terminology</a></p>
+</li>
+            </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2">
-            <p id="section-toc.1-1.2.1" class="keepWithNext"><a href="#section-2" class="auto internal xref">2</a>.  <a href="#name-conventions-and-definitions" class="internal xref">Conventions and Definitions</a></p>
+            <p id="section-toc.1-1.2.1"><a href="#section-2" class="auto internal xref">2</a>.  <a href="#name-resource-parameter" class="internal xref">Resource Parameter</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.1">
+                <p id="section-toc.1-1.2.2.1.1"><a href="#section-2.1" class="auto internal xref">2.1</a>.  <a href="#name-authorization-request" class="internal xref">Authorization Request</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.2">
+                <p id="section-toc.1-1.2.2.2.1"><a href="#section-2.2" class="auto internal xref">2.2</a>.  <a href="#name-access-token-request" class="internal xref">Access Token Request</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.3">
+                <p id="section-toc.1-1.2.2.3.1"><a href="#section-2.3" class="auto internal xref">2.3</a>.  <a href="#name-access-token-response-3" class="internal xref">Access Token Response</a></p>
+</li>
+            </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3">
-            <p id="section-toc.1-1.3.1" class="keepWithNext"><a href="#section-3" class="auto internal xref">3</a>.  <a href="#name-security-considerations" class="internal xref">Security Considerations</a></p>
+            <p id="section-toc.1-1.3.1"><a href="#section-3" class="auto internal xref">3</a>.  <a href="#name-security-considerations" class="internal xref">Security Considerations</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4">
-            <p id="section-toc.1-1.4.1"><a href="#section-4" class="auto internal xref">4</a>.  <a href="#name-iana-considerations" class="internal xref">IANA Considerations</a></p>
+            <p id="section-toc.1-1.4.1"><a href="#section-4" class="auto internal xref">4</a>.  <a href="#name-privacy-considerations" class="internal xref">Privacy Considerations</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5">
-            <p id="section-toc.1-1.5.1"><a href="#section-5" class="auto internal xref">5</a>.  <a href="#name-normative-references" class="internal xref">Normative References</a></p>
+            <p id="section-toc.1-1.5.1"><a href="#section-5" class="auto internal xref">5</a>.  <a href="#name-iana-considerations" class="internal xref">IANA Considerations</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.1">
+                <p id="section-toc.1-1.5.2.1.1"><a href="#section-5.1" class="auto internal xref">5.1</a>.  <a href="#name-oauth-parameters-registrati" class="internal xref">OAuth Parameters Registration</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.2">
+                <p id="section-toc.1-1.5.2.2.1"><a href="#section-5.2" class="auto internal xref">5.2</a>.  <a href="#name-oauth-extensions-error-regi" class="internal xref">OAuth Extensions Error Registration</a></p>
+</li>
+            </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6">
-            <p id="section-toc.1-1.6.1"><a href="#appendix-A" class="auto internal xref"></a><a href="#name-acknowledgments" class="internal xref">Acknowledgments</a></p>
+            <p id="section-toc.1-1.6.1"><a href="#section-6" class="auto internal xref">6</a>.  <a href="#name-references" class="internal xref">References</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.1">
+                <p id="section-toc.1-1.6.2.1.1"><a href="#section-6.1" class="auto internal xref">6.1</a>.  <a href="#name-normative-references" class="internal xref">Normative References</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.2">
+                <p id="section-toc.1-1.6.2.2.1"><a href="#section-6.2" class="auto internal xref">6.2</a>.  <a href="#name-informative-references" class="internal xref">Informative References</a></p>
+</li>
+            </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7">
-            <p id="section-toc.1-1.7.1"><a href="#appendix-B" class="auto internal xref"></a><a href="#name-authors-addresses" class="internal xref">Authors' Addresses</a></p>
+            <p id="section-toc.1-1.7.1"><a href="#appendix-A" class="auto internal xref"></a><a href="#name-acknowledgments" class="internal xref">Acknowledgments</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8">
+            <p id="section-toc.1-1.8.1"><a href="#appendix-B" class="auto internal xref"></a><a href="#name-document-history" class="internal xref">Document History</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9">
+            <p id="section-toc.1-1.9.1"><a href="#appendix-C" class="auto internal xref"></a><a href="#name-authors-addresses" class="internal xref">Authors' Addresses</a></p>
 </li>
         </ul>
 </nav>
@@ -1196,18 +1243,464 @@ svg :is([fill="white"], [fill^="#fff"]) {
       <h2 id="name-introduction">
 <a href="#section-1" class="section-number selfRef">1. </a><a href="#name-introduction" class="section-name selfRef">Introduction</a>
       </h2>
-<p id="section-1-1">TODO Introduction<a href="#section-1-1" class="pilcrow">¶</a></p>
-</section>
-</div>
-<div id="conventions-and-definitions">
-<section id="section-2">
-      <h2 id="name-conventions-and-definitions">
-<a href="#section-2" class="section-number selfRef">2. </a><a href="#name-conventions-and-definitions" class="section-name selfRef">Conventions and Definitions</a>
-      </h2>
-<p id="section-2-1">The key words "<span class="bcp14">MUST</span>", "<span class="bcp14">MUST NOT</span>", "<span class="bcp14">REQUIRED</span>", "<span class="bcp14">SHALL</span>", "<span class="bcp14">SHALL NOT</span>", "<span class="bcp14">SHOULD</span>", "<span class="bcp14">SHOULD NOT</span>", "<span class="bcp14">RECOMMENDED</span>", "<span class="bcp14">NOT RECOMMENDED</span>",
+<p id="section-1-1">Several years of deployment and implementation experience with the OAuth
+2.0 Authorization Framework <span>[<a href="#RFC6749" class="cite xref">RFC6749</a>]</span> has uncovered a need (in some
+circumstances, such as an authorization server servicing a significant
+number of diverse resources) for the client to explicitly signal to the
+authorization server where it intends to use the access token it is
+requesting.<a href="#section-1-1" class="pilcrow">¶</a></p>
+<p id="section-1-2">Knowing the protected resource (a.k.a. resource server, application,
+API, etc.) that will process the access token enables the authorization
+server to construct the token as necessary for that entity. Properly
+encrypting the token (or content within the token) to a particular
+resource, for example, requires knowing which resource will receive and
+decrypt the token. Furthermore, various resources oftentimes have
+different requirements with respect to the data contained in (or
+referenced by) the token, and knowing the resource where the client
+intends to use the token allows the authorization server to mint the
+token accordingly.<a href="#section-1-2" class="pilcrow">¶</a></p>
+<p id="section-1-3">Specific knowledge of the intended recipient(s) of the access token also
+helps facilitate improved security characteristics of the token itself.
+Bearer tokens, currently the most commonly utilized type of OAuth access
+token, allow any party in possession of a token to get access to the
+associated resources. To prevent misuse, several important security
+assumptions must hold, one of which is that an access token must only be
+valid for use at a specific protected resource and for a
+specific scope of access.
+<span><a href="https://rfc-editor.org/rfc/rfc6750#section-5.2" class="relref">Section 5.2</a> of [<a href="#RFC6750" class="cite xref">RFC6750</a>]</span>, for example, prescribes including
+the token's intended recipients within the token to prevent
+token redirect. When the authorization server is informed of
+the resource that will process the access token, it can restrict
+the intended audience of that token to the given resource such
+that the token cannot be used successfully at other resources.<a href="#section-1-3" class="pilcrow">¶</a></p>
+<p id="section-1-4">OAuth scope, from <span><a href="https://rfc-editor.org/rfc/rfc6749#section-3.3" class="relref">Section 3.3</a> of [<a href="#RFC6749" class="cite xref">RFC6749</a>]</span>, is sometimes
+overloaded to convey the location or identity of the protected
+resource, however, doing so isn't always feasible or desirable.
+Scope is typically about what access is being requested rather
+than where that access will be redeemed (e.g., <code>email</code>,
+<code>admin:org</code>, <code>user_photos</code>, <code>channels:read</code>, and
+<code>channels:write</code> are a small sample of scope values in use in
+the wild that convey only the type of access and not the
+location or identity).<a href="#section-1-4" class="pilcrow">¶</a></p>
+<p id="section-1-5">In some circumstances and for some deployments, a means for the client
+to signal to the authorization server where it intends to use the access
+token it's requesting is important and useful. A number of
+implementations and deployments of OAuth 2.0 have already employed
+proprietary parameters toward that end. Going forward, this
+specification aspires to provide a standardized and interoperable
+alternative to the proprietary approaches.<a href="#section-1-5" class="pilcrow">¶</a></p>
+<div id="requirements-notation-and-conventions">
+<section id="section-1.1">
+        <h3 id="name-requirements-notation-and-c">
+<a href="#section-1.1" class="section-number selfRef">1.1. </a><a href="#name-requirements-notation-and-c" class="section-name selfRef">Requirements Notation and Conventions</a>
+        </h3>
+<p id="section-1.1-1">The key words "<span class="bcp14">MUST</span>", "<span class="bcp14">MUST NOT</span>", "<span class="bcp14">REQUIRED</span>", "<span class="bcp14">SHALL</span>", "<span class="bcp14">SHALL NOT</span>", "<span class="bcp14">SHOULD</span>", "<span class="bcp14">SHOULD NOT</span>", "<span class="bcp14">RECOMMENDED</span>", "<span class="bcp14">NOT RECOMMENDED</span>",
 "<span class="bcp14">MAY</span>", and "<span class="bcp14">OPTIONAL</span>" in this document are to be interpreted as
 described in BCP 14 <span>[<a href="#RFC2119" class="cite xref">RFC2119</a>]</span> <span>[<a href="#RFC8174" class="cite xref">RFC8174</a>]</span> when, and only when, they
-appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶</a></p>
+appear in all capitals, as shown here.<a href="#section-1.1-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="terminology">
+<section id="section-1.2">
+        <h3 id="name-terminology">
+<a href="#section-1.2" class="section-number selfRef">1.2. </a><a href="#name-terminology" class="section-name selfRef">Terminology</a>
+        </h3>
+<p id="section-1.2-1">This specification uses the terms "access token", "refresh token",
+"authorization server", "resource server", "authorization endpoint",
+"authorization request", "authorization response", "token endpoint",
+"grant type", "access token request", "access token response", and
+"client" defined by The OAuth 2.0 Authorization Framework <span>[<a href="#RFC6749" class="cite xref">RFC6749</a>]</span>.<a href="#section-1.2-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+</section>
+</div>
+<div id="ResourceParameter">
+<section id="section-2">
+      <h2 id="name-resource-parameter">
+<a href="#section-2" class="section-number selfRef">2. </a><a href="#name-resource-parameter" class="section-name selfRef">Resource Parameter</a>
+      </h2>
+<p id="section-2-1">The <code>resource</code> parameter is used in requests to the
+authorization server and in access token responses. In
+requests, the parameter appears one or more times with each
+occurrence carrying a single URI value, as is typical for
+<code>application/x-www-form-urlencoded</code> encoded parameters. In
+access token responses, the parameter is a JSON array of
+string values, consistent with the JSON-based response format
+defined in <span><a href="https://rfc-editor.org/rfc/rfc6749#section-5.1" class="relref">Section 5.1</a> of [<a href="#RFC6749" class="cite xref">RFC6749</a>]</span>.<a href="#section-2-1" class="pilcrow">¶</a></p>
+<p id="section-2-2">In requests to the authorization server, a client <span class="bcp14">MAY</span> indicate
+the protected resource (a.k.a. resource server, application,
+API, etc.) to which it is requesting access by including the
+following parameter in the request.<a href="#section-2-2" class="pilcrow">¶</a></p>
+<span class="break"></span><dl class="dlParallel" id="section-2-3">
+        <dt id="section-2-3.1">resource:</dt>
+        <dd style="margin-left: 1.5em" id="section-2-3.2">
+          <p id="section-2-3.2.1">Indicates the target service or resource to which access is
+being requested.  Its value <span class="bcp14">MUST</span> be an absolute URI, as
+specified by <span><a href="https://rfc-editor.org/rfc/rfc3986#section-4.3" class="relref">Section 4.3</a> of [<a href="#RFC3986" class="cite xref">RFC3986</a>]</span>.  The URI <span class="bcp14">MUST NOT</span>
+include a fragment component. It <span class="bcp14">SHOULD NOT</span> include a query
+component, but it is recognized that there are cases that make
+a query component a useful and necessary part of the resource
+parameter, such as when one or more query parameters are used
+to scope requests to an application. The <code>resource</code> parameter
+URI value is an identifier representing the identity of the
+resource, which <span class="bcp14">MAY</span> be a locator that corresponds to a
+network-addressable location where the target resource is
+hosted.  Multiple <code>resource</code> parameters <span class="bcp14">MAY</span> be used to
+indicate that the requested token is intended to be used at
+multiple resources.<a href="#section-2-3.2.1" class="pilcrow">¶</a></p>
+</dd>
+      <dd class="break"></dd>
+</dl>
+<p id="section-2-4">The parameter value identifies a resource to which the client is
+requesting access.  The parameter can carry the location of a protected
+resource, typically as an https URL or a more abstract identifier.  This
+enables the authorization server to apply policy as appropriate for the
+resource, such as determining the type and content of tokens to be
+issued, if and how tokens are encrypted, and applying appropriate
+audience restrictions.<a href="#section-2-4" class="pilcrow">¶</a></p>
+<p id="section-2-5">The client <span class="bcp14">SHOULD</span> provide the most specific URI that it can for
+the complete API or set of resources it intends to access. In
+practice, a client will know a base URI for the application or
+resource that it interacts with, which is appropriate to use as
+the value of the <code>resource</code> parameter. The client <span class="bcp14">SHOULD</span> use
+the base URI of the API as the <code>resource</code> parameter value
+unless specific knowledge of the resource dictates otherwise.
+For example, the value <code>https://api.example.com/</code> would be
+used for a resource that is the exclusive application on that
+host; however, if the resource is one of many applications on
+that host, something like <code>https://api.example.com/app/</code>
+would be used as a more specific value. Another example is
+when an API has multiple endpoints, e.g., when System for
+Cross-domain Identity Management (SCIM) <span>[<a href="#RFC7644" class="cite xref">RFC7644</a>]</span> has
+endpoints such as <code>https://apps.example.com/scim/Users</code>,
+<code>https://apps.example.com/scim/Groups</code>, and
+<code>https://apps.example.com/scim/Schemas</code>. The client would use
+<code>https://apps.example.com/scim/</code> as the resource so that the
+issued access token is valid for all the endpoints of the SCIM
+API.<a href="#section-2-5" class="pilcrow">¶</a></p>
+<p id="section-2-6">The following error code is provided for an authorization server to
+indicate problems with the requested resource(s) in response to an
+authorization request or access token request. It can also be used to
+inform the client that it has requested an invalid combination of
+resource and scope.<a href="#section-2-6" class="pilcrow">¶</a></p>
+<span class="break"></span><dl class="dlParallel" id="section-2-7">
+        <dt id="section-2-7.1">invalid_target:</dt>
+        <dd style="margin-left: 1.5em" id="section-2-7.2">
+          <p id="section-2-7.2.1">The requested resource is invalid, missing, unknown, or malformed.<a href="#section-2-7.2.1" class="pilcrow">¶</a></p>
+</dd>
+      <dd class="break"></dd>
+</dl>
+<p id="section-2-8">The authorization server <span class="bcp14">SHOULD</span> audience-restrict issued access tokens
+to the resource(s) indicated by the <code>resource</code> parameter. Audience
+restrictions can be communicated in JSON Web Tokens <span>[<a href="#RFC7519" class="cite xref">RFC7519</a>]</span> with the
+<code>aud</code> claim and the top-level member of the same name provides the
+audience restriction information in a Token Introspection <span>[<a href="#RFC7662" class="cite xref">RFC7662</a>]</span>
+response. The authorization server may use the exact <code>resource</code> value as
+the audience or it may map from that value to a more general URI or
+abstract identifier for the given resource.<a href="#section-2-8" class="pilcrow">¶</a></p>
+<div id="authorization-request">
+<section id="section-2.1">
+        <h3 id="name-authorization-request">
+<a href="#section-2.1" class="section-number selfRef">2.1. </a><a href="#name-authorization-request" class="section-name selfRef">Authorization Request</a>
+        </h3>
+<p id="section-2.1-1">When the <code>resource</code> parameter is used in an authorization
+request to the authorization endpoint, it indicates the identity
+of the protected resource(s) to which access is being requested.
+When an access token will be returned directly from the
+authorization endpoint via the implicit flow
+(<span><a href="https://rfc-editor.org/rfc/rfc6749#section-4.2" class="relref">Section 4.2</a> of [<a href="#RFC6749" class="cite xref">RFC6749</a>]</span>), the requested resource is
+applicable to that access token. In the code flow
+(<span><a href="https://rfc-editor.org/rfc/rfc6749#section-4.1" class="relref">Section 4.1</a> of [<a href="#RFC6749" class="cite xref">RFC6749</a>]</span>) where an intermediate
+representation of the authorization grant (the authorization
+code) is returned from the authorization endpoint, the requested
+resource is applicable to the full authorization grant.<a href="#section-2.1-1" class="pilcrow">¶</a></p>
+<p id="section-2.1-2">For an authorization request sent as a JSON Web Token (JWT),
+such as when using the JWT Secured Authorization Request (JAR)
+<span>[<a href="#RFC9101" class="cite xref">RFC9101</a>]</span>, a single <code>resource</code> parameter value is represented
+as a JSON string while multiple values are represented as an
+array of strings.<a href="#section-2.1-2" class="pilcrow">¶</a></p>
+<p id="section-2.1-3">If the client omits the <code>resource</code> parameter when requesting
+authorization, the authorization server <span class="bcp14">MAY</span> process the request
+with no specific resource or by using a predefined default
+resource value. Alternatively, the authorization server <span class="bcp14">MAY</span>
+require clients to specify the resource(s) they intend to
+access and <span class="bcp14">MAY</span> fail requests that omit the parameter with an
+<code>invalid_target</code> error. The authorization server might use
+this data to inform the user about the resources the client is
+going to access on their behalf, to apply policy (e.g., refuse
+the request due to unknown resources), and to determine the set
+of resources that can be used in subsequent access token
+requests.<a href="#section-2.1-3" class="pilcrow">¶</a></p>
+<p id="section-2.1-4">If the authorization server fails to parse the provided
+value(s) or does not consider the resource(s) acceptable, it
+should reject the request with an error response using the
+error code <code>invalid_target</code> as the value of the <code>error</code>
+parameter and can provide additional information regarding the
+reasons for the error using the <code>error_description</code>.<a href="#section-2.1-4" class="pilcrow">¶</a></p>
+<p id="section-2.1-5">An example of an authorization request where the client tells
+the authorization server that it wants an access token for use
+at <code>https://api.example.com/app/</code> is shown in
+<a href="#authz-endpoint-example-token" class="auto internal xref">Figure 1</a> below (extra line breaks and
+indentation are for display purposes only).<a href="#section-2.1-5" class="pilcrow">¶</a></p>
+<span id="name-implicit-flow-authorization"></span><div id="authz-endpoint-example-token">
+<figure id="figure-1">
+          <div class="lang-http-message sourcecode" id="section-2.1-6.1">
+<pre>
+GET /as/authorization.oauth2?response_type=token
+   &amp;client_id=example-client
+   &amp;state=XzZaJlcwYew1u0QBrRv_Gw
+   &amp;redirect_uri=https%3A%2F%2Fclient.example.org%2Fcb
+   &amp;resource=https%3A%2F%2Fapi.example.com%2Fapp%2F HTTP/1.1
+Host: authorization-server.example.com
+</pre>
+</div>
+<figcaption><a href="#figure-1" class="selfRef">Figure 1</a>:
+<a href="#name-implicit-flow-authorization" class="selfRef">Implicit Flow Authorization Request</a>
+          </figcaption></figure>
+</div>
+<p id="section-2.1-7">Below in <a href="#authz-endpoint-example-code" class="auto internal xref">Figure 2</a> is an example of an
+authorization request using the <code>code</code> response type where the
+client is requesting access to the resource owner's contacts
+and calendar data at <code>https://cal.example.com/</code> and
+<code>https://contacts.example.com/</code> (extra line breaks and
+indentation are for display purposes only).<a href="#section-2.1-7" class="pilcrow">¶</a></p>
+<span id="name-code-flow-authorization-req"></span><div id="authz-endpoint-example-code">
+<figure id="figure-2">
+          <div class="lang-http-message sourcecode" id="section-2.1-8.1">
+<pre>
+GET /as/authorization.oauth2?response_type=code
+   &amp;client_id=s6BhdRkqt3
+   &amp;state=tNwzQ87pC6llebpmac_IDeeq-mCR2wLDYljHUZUAWuI
+   &amp;redirect_uri=https%3A%2F%2Fclient.example.org%2Fcb
+   &amp;scope=calendar%20contacts
+   &amp;resource=https%3A%2F%2Fcal.example.com%2F
+   &amp;resource=https%3A%2F%2Fcontacts.example.com%2F HTTP/1.1
+Host: authorization-server.example.com
+</pre>
+</div>
+<figcaption><a href="#figure-2" class="selfRef">Figure 2</a>:
+<a href="#name-code-flow-authorization-req" class="selfRef">Code Flow Authorization Request</a>
+          </figcaption></figure>
+</div>
+</section>
+</div>
+<div id="access-token-request">
+<section id="section-2.2">
+        <h3 id="name-access-token-request">
+<a href="#section-2.2" class="section-number selfRef">2.2. </a><a href="#name-access-token-request" class="section-name selfRef">Access Token Request</a>
+        </h3>
+<p id="section-2.2-1">When the <code>resource</code> parameter is used on an access token request made to
+the token endpoint, for all grant types, it indicates the target service
+or protected resource where the client intends to use the requested
+access token.<a href="#section-2.2-1" class="pilcrow">¶</a></p>
+<p id="section-2.2-2">The resource value(s) that is acceptable to an authorization
+server in fulfilling an access token request is at its sole
+discretion based on local policy or configuration. In the case
+of a <code>refresh_token</code> or <code>authorization_code</code> grant type
+request, such policy may limit the acceptable resources to
+those that were originally granted by the resource owner or a
+subset thereof. In the <code>authorization_code</code> case where the
+requested resources are a subset of the set of resources
+originally granted, the authorization server will issue an
+access token based on that subset of requested resources,
+whereas any refresh token that is returned is bound to the full
+original grant.<a href="#section-2.2-2" class="pilcrow">¶</a></p>
+<p id="section-2.2-3">When requesting a token, the client can indicate the desired target
+service(s) where it intends to use that token by way of the <code>resource</code>
+parameter and can indicate the desired scope of the requested token
+using the <code>scope</code> parameter.  The semantics of such a request are that
+the client is asking for a token with the requested scope that is usable
+at all the requested target services. Effectively, the requested access
+rights of the token are the cartesian product of all the scopes at all
+the target services.  To the extent possible, when issuing access
+tokens, the authorization server should downscope the scope value
+associated with an access token to the value the respective resource is
+able to process and needs to know. (Here, "downscope" means give fewer
+permissions than originally authorized by the resource owner.) This
+further improves privacy as a list of scope values is an indication that
+the resource owner uses the multiple various services listed;
+downscoping a token to only that which is needed for a particular
+service can limit the extent to which such information is revealed
+across different services.  As specified in
+<span><a href="https://rfc-editor.org/rfc/rfc6749#section-5.1" class="relref">Section 5.1</a> of [<a href="#RFC6749" class="cite xref">RFC6749</a>]</span>, the authorization server must
+indicate the access token's effective scope to the client in
+the <code>scope</code> response parameter value when it differs from the
+scope requested by the client.<a href="#section-2.2-3" class="pilcrow">¶</a></p>
+<p id="section-2.2-4">Following from the code flow authorization request shown in
+<a href="#authz-endpoint-example-code" class="auto internal xref">Figure 2</a>, the below examples show an
+<code>authorization_code</code> grant type access token request
+(<a href="#token-endpoint-example-ac" class="auto internal xref">Figure 3</a>) and response
+(<a href="#response-example-ac" class="auto internal xref">Figure 4</a>) where the client tells the
+authorization server that it wants the access token for use at
+<code>https://cal.example.com/</code> (extra line breaks and indentation
+are for display purposes only).<a href="#section-2.2-4" class="pilcrow">¶</a></p>
+<span id="name-access-token-request-2"></span><div id="token-endpoint-example-ac">
+<figure id="figure-3">
+          <div class="lang-http-message sourcecode" id="section-2.2-5.1">
+<pre>
+POST /as/token.oauth2 HTTP/1.1
+Host: authorization-server.example.com
+Authorization: Basic czZCaGRSa3F0Mzpoc3FFelFsVW9IQUU5cHg0RlNyNHlJ
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=authorization_code
+&amp;redirect_uri=https%3A%2F%2Fclient.example.org%2Fcb
+&amp;code=10esc29BWC2qZB0acc9v8zAv9ltc2pko105tQauZ
+&amp;resource=https%3A%2F%2Fcal.example.com%2F
+</pre>
+</div>
+<figcaption><a href="#figure-3" class="selfRef">Figure 3</a>:
+<a href="#name-access-token-request-2" class="selfRef">Access Token Request</a>
+          </figcaption></figure>
+</div>
+<span id="name-access-token-response"></span><div id="response-example-ac">
+<figure id="figure-4">
+          <div class="alignLeft art-text artwork" id="section-2.2-6.1">
+<pre>
+HTTP/1.1 200 OK
+Content-Type: application/json
+Cache-Control: no-cache, no-store
+
+{
+   "access_token":"eyJhbGciOiJFUzI1NiIsImtpZCI6Ijc3In0.eyJpc3MiOi
+    JodHRwOi8vYXV0aG9yaXphdGlvbi1zZXJ2ZXIuZXhhbXBsZS5jb20iLCJzdWI
+    iOiJfX2JfYyIsImV4cCI6MTU4ODQyMDgwMCwic2NvcGUiOiJjYWxlbmRhciIs
+    ImF1ZCI6Imh0dHBzOi8vY2FsLmV4YW1wbGUuY29tLyJ9.nNWJ2dXSxaDRdMUK
+    lzs-cYIj8MDoM6Gy7pf_sKrLGsAFf1C2bDhB60DQfW1DZL5npdko1_Mmk5sUf
+    zkiQNVpYw",
+   "token_type":"Bearer",
+   "expires_in":3600,
+   "refresh_token":"4LTC8lb0acc6Oy4esc1Nk9BWC0imAwH7kic16BDC2",
+   "scope":"calendar"
+}
+</pre>
+</div>
+<figcaption><a href="#figure-4" class="selfRef">Figure 4</a>:
+<a href="#name-access-token-response" class="selfRef">Access Token Response</a>
+          </figcaption></figure>
+</div>
+<p id="section-2.2-7">A subsequent access token request, using the refresh token,
+where the client tells the authorization server that it wants
+an access token for use at
+<code>https://contacts.example.com/</code> is shown in
+<a href="#token-endpoint-example-rt" class="auto internal xref">Figure 5</a> below with the response shown in
+<a href="#response-example-rt" class="auto internal xref">Figure 6</a> (extra line breaks and indentation are
+for display purposes only).<a href="#section-2.2-7" class="pilcrow">¶</a></p>
+<span id="name-access-token-request-3"></span><div id="token-endpoint-example-rt">
+<figure id="figure-5">
+          <div class="lang-http-message sourcecode" id="section-2.2-8.1">
+<pre>
+POST /as/token.oauth2 HTTP/1.1
+Host: authorization-server.example.com
+Authorization: Basic czZCaGRSa3F0Mzpoc3FFelFsVW9IQUU5cHg0RlNyNHlJ
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=refresh_token
+&amp;refresh_token=4LTC8lb0acc6Oy4esc1Nk9BWC0imAwH7kic16BDC2
+&amp;resource=https%3A%2F%2Fcontacts.example.com%2F
+</pre>
+</div>
+<figcaption><a href="#figure-5" class="selfRef">Figure 5</a>:
+<a href="#name-access-token-request-3" class="selfRef">Access Token Request</a>
+          </figcaption></figure>
+</div>
+<span id="name-access-token-response-2"></span><div id="response-example-rt">
+<figure id="figure-6">
+          <div class="alignLeft art-text artwork" id="section-2.2-9.1">
+<pre>
+HTTP/1.1 200 OK
+Content-Type: application/json
+Cache-Control: no-cache, no-store
+
+{
+   "access_token":"eyJhbGciOiJFUzI1NiIsImtpZCI6Ijc3In0.eyJpc3MiOi
+    JodHRwOi8vYXV0aG9yaXphdGlvbi1zZXJ2ZXIuZXhhbXBsZS5jb20iLCJzdWI
+    iOiJfX2JfYyIsImV4cCI6MTU4ODQyMDgyNiwic2NvcGUiOiJjb250YWN0cyIs
+    ImF1ZCI6Imh0dHBzOi8vY29udGFjdHMuZXhhbXBsZS5jb20vIn0.5f4yhqazc
+    OSlJw4y94KPeWNEFQqj2cfeO8x4hr3YbHtIl3nQXnBMw5wREY5O1YbZED-GfH
+    UowfmtNaA5EikYAw",
+   "token_type":"Bearer",
+   "expires_in":3600,
+   "scope":"contacts"
+}
+</pre>
+</div>
+<figcaption><a href="#figure-6" class="selfRef">Figure 6</a>:
+<a href="#name-access-token-response-2" class="selfRef">Access Token Response</a>
+          </figcaption></figure>
+</div>
+</section>
+</div>
+<div id="access-token-response">
+<section id="section-2.3">
+        <h3 id="name-access-token-response-3">
+<a href="#section-2.3" class="section-number selfRef">2.3. </a><a href="#name-access-token-response-3" class="section-name selfRef">Access Token Response</a>
+        </h3>
+<p id="section-2.3-1">The <code>resource</code> parameter defined for an access token response
+(<span><a href="https://rfc-editor.org/rfc/rfc6749#section-5.1" class="relref">Section 5.1</a> of [<a href="#RFC6749" class="cite xref">RFC6749</a>]</span>) is used to indicate the
+resource(s) for which the issued access token is valid.<a href="#section-2.3-1" class="pilcrow">¶</a></p>
+<span class="break"></span><dl class="dlParallel" id="section-2.3-2">
+          <dt id="section-2.3-2.1">resource:</dt>
+          <dd style="margin-left: 1.5em" id="section-2.3-2.2">
+            <p id="section-2.3-2.2.1"><span class="bcp14">OPTIONAL</span>, if identical to the <code>resource</code> value(s)
+requested by the client; otherwise, <span class="bcp14">REQUIRED</span>. Its value is
+a JSON array of strings, where each string is an absolute
+URI as specified by <span><a href="https://rfc-editor.org/rfc/rfc3986#section-4.3" class="relref">Section 4.3</a> of [<a href="#RFC3986" class="cite xref">RFC3986</a>]</span>,
+identifying a protected resource for which the access
+token is valid. The array <span class="bcp14">MUST</span> contain at least one value.<a href="#section-2.3-2.2.1" class="pilcrow">¶</a></p>
+</dd>
+        <dd class="break"></dd>
+</dl>
+<p id="section-2.3-3">The <code>resource</code> response parameter serves a similar role to
+the <code>scope</code> response parameter defined in
+<span><a href="https://rfc-editor.org/rfc/rfc6749#section-5.1" class="relref">Section 5.1</a> of [<a href="#RFC6749" class="cite xref">RFC6749</a>]</span>: it informs the client when the
+resource(s) associated with the issued access token differ
+from what the client requested. This can occur when the
+authorization server restricts the token to a subset of
+the requested resources, or when the authorization server
+applies a default resource policy in cases where the client
+did not include the <code>resource</code> parameter in its request.<a href="#section-2.3-3" class="pilcrow">¶</a></p>
+<p id="section-2.3-4">If the client requested access to multiple resources but
+the authorization server issues an access token that is
+restricted to a subset of those resources, the
+authorization server <span class="bcp14">MUST</span> include the <code>resource</code> parameter
+in the response to inform the client of the effective
+resource(s). The client can then make additional token
+requests for the remaining resources as needed.<a href="#section-2.3-4" class="pilcrow">¶</a></p>
+<p id="section-2.3-5">The following is a non-normative example of a token
+endpoint response where the authorization server indicates
+that the issued access token is valid for use at
+<code>https://cal.example.com/</code> (extra line breaks and
+indentation are for display purposes only).<a href="#section-2.3-5" class="pilcrow">¶</a></p>
+<span id="name-access-token-response-with-"></span><div id="response-example-resource">
+<figure id="figure-7">
+          <div class="alignLeft art-text artwork" id="section-2.3-6.1">
+<pre>
+HTTP/1.1 200 OK
+Content-Type: application/json
+Cache-Control: no-cache, no-store
+
+{
+   "access_token":"eyJhbGciOiJFUzI1NiIsImtpZCI6Ijc3In0.eyJpc3MiOi
+    JodHRwOi8vYXV0aG9yaXphdGlvbi1zZXJ2ZXIuZXhhbXBsZS5jb20iLCJzdWI
+    iOiJfX2JfYyIsImV4cCI6MTU4ODQyMDgwMCwic2NvcGUiOiJjYWxlbmRhciIs
+    ImF1ZCI6Imh0dHBzOi8vY2FsLmV4YW1wbGUuY29tLyJ9.nNWJ2dXSxaDRdMUK
+    lzs-cYIj8MDoM6Gy7pf_sKrLGsAFf1C2bDhB60DQfW1DZL5npdko1_Mmk5sUf
+    zkiQNVpYw",
+   "token_type":"Bearer",
+   "expires_in":3600,
+   "refresh_token":"4LTC8lb0acc6Oy4esc1Nk9BWC0imAwH7kic16BDC2",
+   "scope":"calendar",
+   "resource":["https://cal.example.com/"]
+}
+</pre>
+</div>
+<figcaption><a href="#figure-7" class="selfRef">Figure 7</a>:
+<a href="#name-access-token-response-with-" class="selfRef">Access Token Response with Resource</a>
+          </figcaption></figure>
+</div>
+</section>
+</div>
 </section>
 </div>
 <div id="security-considerations">
@@ -1215,32 +1708,198 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
       <h2 id="name-security-considerations">
 <a href="#section-3" class="section-number selfRef">3. </a><a href="#name-security-considerations" class="section-name selfRef">Security Considerations</a>
       </h2>
-<p id="section-3-1">TODO Security<a href="#section-3-1" class="pilcrow">¶</a></p>
+<p id="section-3-1">An audience-restricted access token that is legitimately presented to a
+resource cannot then be taken by that resource and presented elsewhere
+for illegitimate access to other resources. The <code>resource</code> parameter
+enables a client to indicate the protected resources where the requested
+access token will be used, which in turn enables the authorization
+server to apply the appropriate audience restrictions to the token.<a href="#section-3-1" class="pilcrow">¶</a></p>
+<p id="section-3-2">Some servers may host user content or be multi-tenant. In order to avoid
+attacks where one tenant uses an access token to illegitimately access
+resources owned by a different tenant, it is important to use a specific
+resource URI including any portion of the URI that identifies the
+tenant, such as a path component. This will allow access tokens to be
+audience-restricted in a way that identifies the tenant and prevents
+their use, due to an invalid audience, at resources owned by a different
+tenant.<a href="#section-3-2" class="pilcrow">¶</a></p>
+<p id="section-3-3">Although multiple occurrences of the <code>resource</code> parameter may
+be included in a token request, using only a single <code>resource</code>
+parameter is encouraged. If a bearer token has multiple
+intended recipients (audiences), then the
+token is valid at more than one protected resource and can be used by
+any one of those resources to access any of the others. Thus, a high
+degree of trust between the involved parties is needed when using access
+tokens with multiple audiences. Furthermore, an authorization server may
+be unwilling or unable to fulfill a token request with multiple
+resources.<a href="#section-3-3" class="pilcrow">¶</a></p>
+<p id="section-3-4">Whenever feasible, the <code>resource</code> parameter should correspond to the
+network-addressable location of the protected resource. This makes it
+possible for the client to validate that the resource being requested
+controls the corresponding network location, reducing the risk of
+malicious endpoints obtaining tokens meant for other resources. If the
+<code>resource</code> parameter contains an abstract identifier, it is the client's
+responsibility to validate out of band that any network endpoint to
+which tokens are sent are the intended audience for that identifier.<a href="#section-3-4" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="privacy-considerations">
+<section id="section-4">
+      <h2 id="name-privacy-considerations">
+<a href="#section-4" class="section-number selfRef">4. </a><a href="#name-privacy-considerations" class="section-name selfRef">Privacy Considerations</a>
+      </h2>
+<p id="section-4-1">In typical OAuth deployments the authorization server is in a position
+to observe and track a significant amount of user and client behavior.
+It is largely just inherent to the nature of OAuth, and this document
+does little to affect that. In some cases, however, such as when access
+token introspection is not being used, use of the resource parameter
+defined herein may allow for tracking behavior at a somewhat more
+granular and specific level than would otherwise be possible in its
+absence.<a href="#section-4-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="iana-considerations">
-<section id="section-4">
+<section id="section-5">
       <h2 id="name-iana-considerations">
-<a href="#section-4" class="section-number selfRef">4. </a><a href="#name-iana-considerations" class="section-name selfRef">IANA Considerations</a>
+<a href="#section-5" class="section-number selfRef">5. </a><a href="#name-iana-considerations" class="section-name selfRef">IANA Considerations</a>
       </h2>
-<p id="section-4-1">This document has no IANA actions.<a href="#section-4-1" class="pilcrow">¶</a></p>
+<div id="oauth-parameters-registration">
+<section id="section-5.1">
+        <h3 id="name-oauth-parameters-registrati">
+<a href="#section-5.1" class="section-number selfRef">5.1. </a><a href="#name-oauth-parameters-registrati" class="section-name selfRef">OAuth Parameters Registration</a>
+        </h3>
+<p id="section-5.1-1">This specification updates the following value in the IANA
+"OAuth Parameters" registry <span>[<a href="#IANA.OAuth.Parameters" class="cite xref">IANA.OAuth.Parameters</a>]</span> established
+by <span>[<a href="#RFC6749" class="cite xref">RFC6749</a>]</span>.<a href="#section-5.1-1" class="pilcrow">¶</a></p>
+<span class="break"></span><dl class="dlCompact dlParallel" id="section-5.1-2">
+          <dt id="section-5.1-2.1">Parameter name:</dt>
+          <dd style="margin-left: 1.5em" id="section-5.1-2.2">
+            <p id="section-5.1-2.2.1">resource<a href="#section-5.1-2.2.1" class="pilcrow">¶</a></p>
+</dd>
+          <dd class="break"></dd>
+<dt id="section-5.1-2.3">Parameter usage location:</dt>
+          <dd style="margin-left: 1.5em" id="section-5.1-2.4">
+            <p id="section-5.1-2.4.1">authorization request, token request, token response<a href="#section-5.1-2.4.1" class="pilcrow">¶</a></p>
+</dd>
+          <dd class="break"></dd>
+<dt id="section-5.1-2.5">Change controller:</dt>
+          <dd style="margin-left: 1.5em" id="section-5.1-2.6">
+            <p id="section-5.1-2.6.1">IETF<a href="#section-5.1-2.6.1" class="pilcrow">¶</a></p>
+</dd>
+          <dd class="break"></dd>
+<dt id="section-5.1-2.7">Specification document(s):</dt>
+          <dd style="margin-left: 1.5em" id="section-5.1-2.8">
+            <p id="section-5.1-2.8.1"><span><a href="https://rfc-editor.org/rfc/rfc8707#section-2" class="relref">Section 2</a> of [<a href="#RFC8707" class="cite xref">RFC8707</a>]</span> and <a href="#ResourceParameter" class="auto internal xref">Section 2</a> of this document<a href="#section-5.1-2.8.1" class="pilcrow">¶</a></p>
+</dd>
+        <dd class="break"></dd>
+</dl>
 </section>
 </div>
-<div id="sec-normative-references">
-<section id="section-5">
-      <h2 id="name-normative-references">
-<a href="#section-5" class="section-number selfRef">5. </a><a href="#name-normative-references" class="section-name selfRef">Normative References</a>
+<div id="oauth-extensions-error-registration">
+<section id="section-5.2">
+        <h3 id="name-oauth-extensions-error-regi">
+<a href="#section-5.2" class="section-number selfRef">5.2. </a><a href="#name-oauth-extensions-error-regi" class="section-name selfRef">OAuth Extensions Error Registration</a>
+        </h3>
+<p id="section-5.2-1">This specification updates the following error in the IANA
+"OAuth Extensions Error Registry" <span>[<a href="#IANA.OAuth.Parameters" class="cite xref">IANA.OAuth.Parameters</a>]</span>
+established by <span>[<a href="#RFC6749" class="cite xref">RFC6749</a>]</span>.<a href="#section-5.2-1" class="pilcrow">¶</a></p>
+<span class="break"></span><dl class="dlCompact dlParallel" id="section-5.2-2">
+          <dt id="section-5.2-2.1">Error name:</dt>
+          <dd style="margin-left: 1.5em" id="section-5.2-2.2">
+            <p id="section-5.2-2.2.1">invalid_target<a href="#section-5.2-2.2.1" class="pilcrow">¶</a></p>
+</dd>
+          <dd class="break"></dd>
+<dt id="section-5.2-2.3">Error usage location:</dt>
+          <dd style="margin-left: 1.5em" id="section-5.2-2.4">
+            <p id="section-5.2-2.4.1">implicit grant error response, token error response<a href="#section-5.2-2.4.1" class="pilcrow">¶</a></p>
+</dd>
+          <dd class="break"></dd>
+<dt id="section-5.2-2.5">Related protocol extension:</dt>
+          <dd style="margin-left: 1.5em" id="section-5.2-2.6">
+            <p id="section-5.2-2.6.1">resource parameter<a href="#section-5.2-2.6.1" class="pilcrow">¶</a></p>
+</dd>
+          <dd class="break"></dd>
+<dt id="section-5.2-2.7">Change controller:</dt>
+          <dd style="margin-left: 1.5em" id="section-5.2-2.8">
+            <p id="section-5.2-2.8.1">IETF<a href="#section-5.2-2.8.1" class="pilcrow">¶</a></p>
+</dd>
+          <dd class="break"></dd>
+<dt id="section-5.2-2.9">Specification document(s):</dt>
+          <dd style="margin-left: 1.5em" id="section-5.2-2.10">
+            <p id="section-5.2-2.10.1"><span><a href="https://rfc-editor.org/rfc/rfc8707#section-2" class="relref">Section 2</a> of [<a href="#RFC8707" class="cite xref">RFC8707</a>]</span> and <a href="#ResourceParameter" class="auto internal xref">Section 2</a> of this document<a href="#section-5.2-2.10.1" class="pilcrow">¶</a></p>
+</dd>
+        <dd class="break"></dd>
+</dl>
+</section>
+</div>
+</section>
+</div>
+<div id="sec-combined-references">
+<section id="section-6">
+      <h2 id="name-references">
+<a href="#section-6" class="section-number selfRef">6. </a><a href="#name-references" class="section-name selfRef">References</a>
       </h2>
+<div id="sec-normative-references">
+<section id="section-6.1">
+        <h3 id="name-normative-references">
+<a href="#section-6.1" class="section-number selfRef">6.1. </a><a href="#name-normative-references" class="section-name selfRef">Normative References</a>
+        </h3>
 <dl class="references">
+<dt id="IANA.OAuth.Parameters">[IANA.OAuth.Parameters]</dt>
+        <dd>
+<span class="refAuthor">IANA</span>, <span class="refTitle">"OAuth Parameters"</span>, <span>&lt;<a href="https://www.iana.org/assignments/oauth-parameters">https://www.iana.org/assignments/oauth-parameters</a>&gt;</span>. </dd>
+<dd class="break"></dd>
 <dt id="RFC2119">[RFC2119]</dt>
-      <dd>
+        <dd>
 <span class="refAuthor">Bradner, S.</span>, <span class="refTitle">"Key words for use in RFCs to Indicate Requirement Levels"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 2119</span>, <span class="seriesInfo">DOI 10.17487/RFC2119</span>, <time datetime="1997-03" class="refDate">March 1997</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc2119">https://www.rfc-editor.org/rfc/rfc2119</a>&gt;</span>. </dd>
 <dd class="break"></dd>
+<dt id="RFC3986">[RFC3986]</dt>
+        <dd>
+<span class="refAuthor">Berners-Lee, T.</span>, <span class="refAuthor">Fielding, R.</span>, and <span class="refAuthor">L. Masinter</span>, <span class="refTitle">"Uniform Resource Identifier (URI): Generic Syntax"</span>, <span class="seriesInfo">STD 66</span>, <span class="seriesInfo">RFC 3986</span>, <span class="seriesInfo">DOI 10.17487/RFC3986</span>, <time datetime="2005-01" class="refDate">January 2005</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc3986">https://www.rfc-editor.org/rfc/rfc3986</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC6749">[RFC6749]</dt>
+        <dd>
+<span class="refAuthor">Hardt, D., Ed.</span>, <span class="refTitle">"The OAuth 2.0 Authorization Framework"</span>, <span class="seriesInfo">RFC 6749</span>, <span class="seriesInfo">DOI 10.17487/RFC6749</span>, <time datetime="2012-10" class="refDate">October 2012</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc6749">https://www.rfc-editor.org/rfc/rfc6749</a>&gt;</span>. </dd>
+<dd class="break"></dd>
 <dt id="RFC8174">[RFC8174]</dt>
-    <dd>
+      <dd>
 <span class="refAuthor">Leiba, B.</span>, <span class="refTitle">"Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 8174</span>, <span class="seriesInfo">DOI 10.17487/RFC8174</span>, <time datetime="2017-05" class="refDate">May 2017</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8174">https://www.rfc-editor.org/rfc/rfc8174</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 </dl>
+</section>
+</div>
+<div id="sec-informative-references">
+<section id="section-6.2">
+        <h3 id="name-informative-references">
+<a href="#section-6.2" class="section-number selfRef">6.2. </a><a href="#name-informative-references" class="section-name selfRef">Informative References</a>
+        </h3>
+<dl class="references">
+<dt id="RFC6750">[RFC6750]</dt>
+        <dd>
+<span class="refAuthor">Jones, M.</span> and <span class="refAuthor">D. Hardt</span>, <span class="refTitle">"The OAuth 2.0 Authorization Framework: Bearer Token Usage"</span>, <span class="seriesInfo">RFC 6750</span>, <span class="seriesInfo">DOI 10.17487/RFC6750</span>, <time datetime="2012-10" class="refDate">October 2012</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc6750">https://www.rfc-editor.org/rfc/rfc6750</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC7519">[RFC7519]</dt>
+        <dd>
+<span class="refAuthor">Jones, M.</span>, <span class="refAuthor">Bradley, J.</span>, and <span class="refAuthor">N. Sakimura</span>, <span class="refTitle">"JSON Web Token (JWT)"</span>, <span class="seriesInfo">RFC 7519</span>, <span class="seriesInfo">DOI 10.17487/RFC7519</span>, <time datetime="2015-05" class="refDate">May 2015</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc7519">https://www.rfc-editor.org/rfc/rfc7519</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC7644">[RFC7644]</dt>
+        <dd>
+<span class="refAuthor">Hunt, P., Ed.</span>, <span class="refAuthor">Grizzle, K.</span>, <span class="refAuthor">Ansari, M.</span>, <span class="refAuthor">Wahlstroem, E.</span>, and <span class="refAuthor">C. Mortimore</span>, <span class="refTitle">"System for Cross-domain Identity Management: Protocol"</span>, <span class="seriesInfo">RFC 7644</span>, <span class="seriesInfo">DOI 10.17487/RFC7644</span>, <time datetime="2015-09" class="refDate">September 2015</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc7644">https://www.rfc-editor.org/rfc/rfc7644</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC7662">[RFC7662]</dt>
+        <dd>
+<span class="refAuthor">Richer, J., Ed.</span>, <span class="refTitle">"OAuth 2.0 Token Introspection"</span>, <span class="seriesInfo">RFC 7662</span>, <span class="seriesInfo">DOI 10.17487/RFC7662</span>, <time datetime="2015-10" class="refDate">October 2015</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc7662">https://www.rfc-editor.org/rfc/rfc7662</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC8707">[RFC8707]</dt>
+        <dd>
+<span class="refAuthor">Campbell, B.</span>, <span class="refAuthor">Bradley, J.</span>, and <span class="refAuthor">H. Tschofenig</span>, <span class="refTitle">"Resource Indicators for OAuth 2.0"</span>, <span class="seriesInfo">RFC 8707</span>, <span class="seriesInfo">DOI 10.17487/RFC8707</span>, <time datetime="2020-02" class="refDate">February 2020</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8707">https://www.rfc-editor.org/rfc/rfc8707</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC9101">[RFC9101]</dt>
+      <dd>
+<span class="refAuthor">Sakimura, N.</span>, <span class="refAuthor">Bradley, J.</span>, and <span class="refAuthor">M. Jones</span>, <span class="refTitle">"The OAuth 2.0 Authorization Framework: JWT-Secured Authorization Request (JAR)"</span>, <span class="seriesInfo">RFC 9101</span>, <span class="seriesInfo">DOI 10.17487/RFC9101</span>, <time datetime="2021-08" class="refDate">August 2021</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9101">https://www.rfc-editor.org/rfc/rfc9101</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+</dl>
+</section>
+</div>
 </section>
 </div>
 <div id="acknowledgments">
@@ -1248,11 +1907,72 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
       <h2 id="name-acknowledgments">
 <a href="#name-acknowledgments" class="section-name selfRef">Acknowledgments</a>
       </h2>
-<p id="appendix-A-1">TODO acknowledge.<a href="#appendix-A-1" class="pilcrow">¶</a></p>
+<p id="appendix-A-1">The original specification <span>[<a href="#RFC8707" class="cite xref">RFC8707</a>]</span> was developed within the OAuth
+Working Group under the chairmanship of Hannes Tschofenig and Rifaat
+Shekh-Yusef with Eric Rescorla, Benjamin Kaduk, and Roman Danyliw
+serving as Security Area Directors.  Additionally, the following
+individuals contributed ideas, feedback, and wording that helped shape
+that specification:<a href="#appendix-A-1" class="pilcrow">¶</a></p>
+<p id="appendix-A-2">Vittorio Bertocci, Sergey Beryozkin, Roman Danyliw, William Denniss,
+Vladimir Dzhuvinov, George Fletcher, Dick Hardt, Phil Hunt, Michael
+Jones, Benjamin Kaduk, Barry Leiba, Torsten Lodderstedt, Anthony
+Nadalin, Justin Richer, Adam Roach, Nat Sakimura, Rifaat Shekh-Yusef,
+Filip Skokan, Éric Vyncke, and Hans Zandbelt.<a href="#appendix-A-2" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="document-history">
+<section id="appendix-B">
+      <h2 id="name-document-history">
+<a href="#name-document-history" class="section-name selfRef">Document History</a>
+      </h2>
+<p id="appendix-B-1">draft-skokan-oauth-rfc8707bis-01<a href="#appendix-B-1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="appendix-B-2.1">
+          <p id="appendix-B-2.1.1">Added <code>resource</code> token endpoint response parameter<a href="#appendix-B-2.1.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-B-2.2">
+          <p id="appendix-B-2.2.1">Added Filip Skokan as editor<a href="#appendix-B-2.2.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-B-2.3">
+          <p id="appendix-B-2.3.1">Updated Brian Campbell's email address<a href="#appendix-B-2.3.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-B-2.4">
+          <p id="appendix-B-2.4.1">Updated Hannes Tschofenig's email address<a href="#appendix-B-2.4.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-B-2.5">
+          <p id="appendix-B-2.5.1">Applied verified erratum 6810<a href="#appendix-B-2.5.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-B-2.6">
+          <p id="appendix-B-2.6.1">Replaced JWT-SAR reference alias with <span>[<a href="#RFC9101" class="cite xref">RFC9101</a>]</span><a href="#appendix-B-2.6.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-B-2.7">
+          <p id="appendix-B-2.7.1">Added <span>[<a href="#RFC8707" class="cite xref">RFC8707</a>]</span> as an informative reference<a href="#appendix-B-2.7.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-B-2.8">
+          <p id="appendix-B-2.8.1">Removed unused section anchors<a href="#appendix-B-2.8.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-B-2.9">
+          <p id="appendix-B-2.9.1">Removed unnecessary BCP14 keyword bolding<a href="#appendix-B-2.9.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-B-2.10">
+          <p id="appendix-B-2.10.1">Updated IANA registrations change controller to IETF
+and specification documents to cross-reference both
+<span>[<a href="#RFC8707" class="cite xref">RFC8707</a>]</span> and this document<a href="#appendix-B-2.10.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-B-2.11">
+          <p id="appendix-B-2.11.1">Updated acknowledgements<a href="#appendix-B-2.11.1" class="pilcrow">¶</a></p>
+</li>
+      </ul>
+<p id="appendix-B-3">draft-skokan-oauth-rfc8707bis-00<a href="#appendix-B-3" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="appendix-B-4.1">
+          <p id="appendix-B-4.1.1">Recreation of <span>[<a href="#RFC8707" class="cite xref">RFC8707</a>]</span> in markdown<a href="#appendix-B-4.1.1" class="pilcrow">¶</a></p>
+</li>
+      </ul>
 </section>
 </div>
 <div id="authors-addresses">
-<section id="appendix-B">
+<section id="appendix-C">
       <h2 id="name-authors-addresses">
 <a href="#name-authors-addresses" class="section-name selfRef">Authors' Addresses</a>
       </h2>
@@ -1269,7 +1989,7 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
 <div dir="auto" class="left"><span class="org">Ping Identity</span></div>
 <div class="email">
 <span>Email:</span>
-<a href="mailto:brian.d.campbell@gmail.com" class="email">brian.d.campbell@gmail.com</a>
+<a href="mailto:bcampbell@pingidentity.com" class="email">bcampbell@pingidentity.com</a>
 </div>
 </address>
 <address class="vcard">
