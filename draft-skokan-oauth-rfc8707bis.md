@@ -195,15 +195,6 @@ endpoints such as `https://apps.example.com/scim/Users`,
 issued access token is valid for all the endpoints of the SCIM
 API.
 
-The following error code is provided for an authorization server to
-indicate problems with the requested resource(s) in response to an
-authorization request or access token request. It can also be used to
-inform the client that it has requested an invalid combination of
-resource and scope.
-
-invalid_target:
-: The requested resource is invalid, missing, unknown, or malformed.
-
 The authorization server SHOULD audience-restrict issued access tokens
 to the resource(s) indicated by the `resource` parameter. Audience
 restrictions can be communicated in JSON Web Tokens {{RFC7519}} with the
@@ -212,6 +203,15 @@ audience restriction information in a Token Introspection {{RFC7662}}
 response. The authorization server may use the exact `resource` value as
 the audience or it may map from that value to a more general URI or
 abstract identifier for the given resource.
+
+The following error code is provided for an authorization server to
+indicate problems with the requested resource(s) in response to an
+authorization request or access token request. It can also be used to
+inform the client that it has requested an invalid combination of
+resource and scope.
+
+invalid_target:
+: The requested resource is invalid, missing, unknown, or malformed.
 
 ## Authorization Request
 
@@ -591,6 +591,8 @@ Filip Skokan, Éric Vyncke, and Hans Zandbelt.
 draft-skokan-oauth-rfc8707bis-01
 
 - Added `resource` token endpoint response parameter
+- Repositioned `invalid_target` error code definition after
+  audience restriction guidance
 - Added Filip Skokan as editor
 - Updated Brian Campbell's email address
 - Updated Hannes Tschofenig's affiliation
