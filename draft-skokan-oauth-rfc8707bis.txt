@@ -421,8 +421,8 @@ Table of Contents
    parameter used in requests.
 
    The resource parameter defined for an access token response
-   (Section 5.1 of [RFC6749]) is used to indicate the resource(s) for
-   which the issued access token is valid.
+   (Section 5.1 of [RFC6749]) is used to indicate to the client the
+   resource(s) which an issued access token is for.
 
    resource:  OPTIONAL, if identical to the resource value(s) requested
       by the client; otherwise, REQUIRED.  Its value is a JSON array of
