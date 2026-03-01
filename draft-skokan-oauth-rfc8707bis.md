@@ -435,10 +435,10 @@ Parameter usage location:
 : authorization request, token request
 
 Change controller:
-: IESG
+: IETF
 
 Specification document(s):
-: RFC 8707
+: {{Section 2 of RFC8707}} and {{ResourceParameter}} of this document
 
 ## OAuth Extensions Error Registration
 
@@ -458,10 +458,10 @@ Related protocol extension:
 : resource parameter
 
 Change controller:
-: IESG
+: IETF
 
 Specification document(s):
-: RFC 8707
+: {{Section 2 of RFC8707}} and {{ResourceParameter}} of this document
 
 
 --- back
