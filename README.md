@@ -4,6 +4,13 @@
 
 This is the working area for individual Internet-Drafts.
 
+## Resource Indicator Response Parameter for OAuth 2.0
+
+* [Editor's Copy](https://panva.github.io/draft-oauth-rfc8707bis/#go.draft-skokan-oauth-resource-response.html)
+* [Datatracker Page](https://datatracker.ietf.org/doc/draft-skokan-oauth-resource-response)
+* [Individual Draft](https://datatracker.ietf.org/doc/html/draft-skokan-oauth-resource-response)
+* [Compare Editor's Copy to Individual Draft](https://panva.github.io/draft-oauth-rfc8707bis/#go.draft-skokan-oauth-resource-response.diff)
+
 ## Resource Indicators for OAuth 2.0
 
 * [Editor's Copy](https://panva.github.io/draft-oauth-rfc8707bis/#go.draft-skokan-oauth-rfc8707bis.html)
