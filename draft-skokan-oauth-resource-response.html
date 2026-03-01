@@ -1253,27 +1253,30 @@ one value.<a href="#section-2-3.2.1" class="pilcrow">¶</a></p>
 </dd>
       <dd class="break"></dd>
 </dl>
-<p id="section-2-4">The <code>resource</code> response parameter serves a similar role to the <code>scope</code>
+<p id="section-2-4">[[TODO: Should the response use <code>resource</code> (a JSON string) when a
+single resource is indicated and <code>resources</code> (a JSON array of strings)
+when multiple are indicated instead?]]<a href="#section-2-4" class="pilcrow">¶</a></p>
+<p id="section-2-5">The <code>resource</code> response parameter serves a similar role to the <code>scope</code>
 response parameter defined in <span><a href="https://rfc-editor.org/rfc/rfc6749#section-5.1" class="relref">Section 5.1</a> of [<a href="#RFC6749" class="cite xref">RFC6749</a>]</span>: it informs the
 client when the resource(s) associated with the issued access token
 differ from what the client requested. This can occur when the
 authorization server restricts the token to a subset of the requested
 resources, or when the authorization server applies a default resource
 policy in cases where the client did not include the <code>resource</code> parameter
-in its request.<a href="#section-2-4" class="pilcrow">¶</a></p>
-<p id="section-2-5">If the client requested access to multiple resources but the
+in its request.<a href="#section-2-5" class="pilcrow">¶</a></p>
+<p id="section-2-6">If the client requested access to multiple resources but the
 authorization server issues an access token that is restricted to a
 subset of those resources, the authorization server <span class="bcp14">MUST</span> include the
 <code>resource</code> parameter in the response to inform the client of the
 effective resource(s). The client can then make additional token requests
-for the remaining resources as needed.<a href="#section-2-5" class="pilcrow">¶</a></p>
-<p id="section-2-6">The following is a non-normative example of a token endpoint response
+for the remaining resources as needed.<a href="#section-2-6" class="pilcrow">¶</a></p>
+<p id="section-2-7">The following is a non-normative example of a token endpoint response
 where the authorization server indicates that the issued access token is
 valid for use at <code>https://cal.example.com/</code> (extra line breaks and
-indentation are for display purposes only).<a href="#section-2-6" class="pilcrow">¶</a></p>
+indentation are for display purposes only).<a href="#section-2-7" class="pilcrow">¶</a></p>
 <span id="name-access-token-response-with-"></span><div id="response-example-resource">
 <figure id="figure-1">
-        <div class="alignLeft art-text artwork" id="section-2-7.1">
+        <div class="alignLeft art-text artwork" id="section-2-8.1">
 <pre>
 HTTP/1.1 200 OK
 Content-Type: application/json
