@@ -6,11 +6,11 @@ Web Authorization Protocol                                     F. Skokan
 Internet-Draft                                                      Okta
 Obsoletes: 8707 (if approved)                                B. Campbell
 Intended status: Standards Track                           Ping Identity
-Expires: 2 September 2026                                     J. Bradley
+Expires: 3 September 2026                                     J. Bradley
                                                                   Yubico
                                                            H. Tschofenig
                                                                    H-BRS
-                                                            1 March 2026
+                                                            2 March 2026
 
 
                    Resource Indicators for OAuth 2.0
@@ -58,7 +58,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 2 September 2026.
+   This Internet-Draft will expire on 3 September 2026.
 
 Copyright Notice
 

@@ -1054,7 +1054,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Skokan</td>
-<td class="center">Expires 2 September 2026</td>
+<td class="center">Expires 3 September 2026</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1070,12 +1070,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <a href="https://www.rfc-editor.org/rfc/rfc8707" class="eref">8707</a> (if approved)</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2026-03-01" class="published">1 March 2026</time>
+<time datetime="2026-03-02" class="published">2 March 2026</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2026-09-02">2 September 2026</time></dd>
+<dd class="expires"><time datetime="2026-09-03">3 September 2026</time></dd>
 <dt class="label-authors">Author:</dt>
 <dd class="authors">
 <div class="author">
@@ -1128,7 +1128,7 @@ client the resource(s) which an issued access token is for. It updates
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 2 September 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 3 September 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1166,7 +1166,12 @@ client the resource(s) which an issued access token is for. It updates
             </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2">
-            <p id="section-toc.1-1.2.1" class="keepWithNext"><a href="#section-2" class="auto internal xref">2</a>.  <a href="#name-access-token-response-resou" class="internal xref">Access Token Response Resource Parameter</a></p>
+            <p id="section-toc.1-1.2.1"><a href="#section-2" class="auto internal xref">2</a>.  <a href="#name-access-token-response-resou" class="internal xref">Access Token Response Resource Parameter</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.1">
+                <p id="section-toc.1-1.2.2.1.1" class="keepWithNext"><a href="#section-2.1" class="auto internal xref">2.1</a>.  <a href="#name-scope-or-policy-determined-" class="internal xref">Scope or Policy Determined Resources</a></p>
+</li>
+            </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3">
             <p id="section-toc.1-1.3.1"><a href="#section-3" class="auto internal xref">3</a>.  <a href="#name-security-considerations" class="internal xref">Security Considerations</a></p>
@@ -1183,7 +1188,15 @@ client the resource(s) which an issued access token is for. It updates
             </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6">
-            <p id="section-toc.1-1.6.1"><a href="#section-6" class="auto internal xref">6</a>.  <a href="#name-normative-references" class="internal xref">Normative References</a></p>
+            <p id="section-toc.1-1.6.1"><a href="#section-6" class="auto internal xref">6</a>.  <a href="#name-references" class="internal xref">References</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.1">
+                <p id="section-toc.1-1.6.2.1.1"><a href="#section-6.1" class="auto internal xref">6.1</a>.  <a href="#name-normative-references" class="internal xref">Normative References</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.2">
+                <p id="section-toc.1-1.6.2.2.1"><a href="#section-6.2" class="auto internal xref">6.2</a>.  <a href="#name-informative-references" class="internal xref">Informative References</a></p>
+</li>
+            </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7">
             <p id="section-toc.1-1.7.1"><a href="#appendix-A" class="auto internal xref"></a><a href="#name-acknowledgments" class="internal xref">Acknowledgments</a></p>
@@ -1272,36 +1285,85 @@ subset of those resources, the authorization server <span class="bcp14">MUST</sp
 <code>resource</code> parameter in the response to inform the client of the
 effective resource(s). The client can then make additional token requests
 for the remaining resources as needed.<a href="#section-2-6" class="pilcrow">¶</a></p>
-<p id="section-2-7">The following is a non-normative example of a token endpoint response
+<div id="ScopeDeterminedResources">
+<section id="section-2.1">
+        <h3 id="name-scope-or-policy-determined-">
+<a href="#section-2.1" class="section-number selfRef">2.1. </a><a href="#name-scope-or-policy-determined-" class="section-name selfRef">Scope or Policy Determined Resources</a>
+        </h3>
+<p id="section-2.1-1">In some deployments, certain scope values are inherently associated with
+specific protected resources. For example, the <code>openid</code> scope in
+OpenID Connect <span>[<a href="#OpenID.Core" class="cite xref">OpenID.Core</a>]</span> is tightly coupled to the UserInfo
+endpoint, and authorization
+servers may define scope values that are only meaningful at a particular
+resource.<a href="#section-2.1-1" class="pilcrow">¶</a></p>
+<p id="section-2.1-2">When an authorization server issues an access token for a resource that
+it determined based on requested scope values or its own default policy,
+rather than from an explicit <code>resource</code> request parameter, the
+authorization server <span class="bcp14">SHOULD</span> use the resource's designated Resource
+Identifier <span>[<a href="#RFC9728" class="cite xref">RFC9728</a>]</span> as the <code>resource</code> response parameter value. If
+no Resource Identifier is defined for the resource, the authorization
+server <span class="bcp14">SHOULD</span> use the exact URL of the protected resource instead. The
+value used <span class="bcp14">SHOULD</span> be one that the client can recognize and correlate
+with the intended protected resource (e.g., the UserInfo endpoint URL
+for an OpenID Provider when the <code>openid</code> scope is requested).<a href="#section-2.1-2" class="pilcrow">¶</a></p>
+<p id="section-2.1-3">Since such a resource value was not explicitly requested by the client,
+the <code>resource</code> response parameter is <span class="bcp14">REQUIRED</span> in this case per the
+condition defined in <a href="#ResourceResponseParameter" class="auto internal xref">Section 2</a>.<a href="#section-2.1-3" class="pilcrow">¶</a></p>
+<p id="section-2.1-4">The following is a non-normative example of a token endpoint response
 where the authorization server indicates that the issued access token is
-valid for use at <code>https://cal.example.com/</code> (extra line breaks and
-indentation are for display purposes only).<a href="#section-2-7" class="pilcrow">¶</a></p>
+valid for use at <code>https://cal.example.com/</code>.<a href="#section-2.1-4" class="pilcrow">¶</a></p>
 <span id="name-access-token-response-with-"></span><div id="response-example-resource">
 <figure id="figure-1">
-        <div class="alignLeft art-text artwork" id="section-2-8.1">
+          <div class="alignLeft art-text artwork" id="section-2.1-5.1">
 <pre>
 HTTP/1.1 200 OK
 Content-Type: application/json
 Cache-Control: no-cache, no-store
 
 {
-   "access_token":"eyJhbGciOiJFUzI1NiIsImtpZCI6Ijc3In0.eyJpc3MiOi
-    JodHRwOi8vYXV0aG9yaXphdGlvbi1zZXJ2ZXIuZXhhbXBsZS5jb20iLCJzdWI
-    iOiJfX2JfYyIsImV4cCI6MTU4ODQyMDgwMCwic2NvcGUiOiJjYWxlbmRhciIs
-    ImF1ZCI6Imh0dHBzOi8vY2FsLmV4YW1wbGUuY29tLyJ9.nNWJ2dXSxaDRdMUK
-    lzs-cYIj8MDoM6Gy7pf_sKrLGsAFf1C2bDhB60DQfW1DZL5npdko1_Mmk5sUf
-    zkiQNVpYw",
-   "token_type":"Bearer",
+   "access_token": "_Q-oyRuYqHlj_ZgXwuS54thQm_L5GhB3XH20cVtYfq",
+   "token_type": "Bearer",
    "expires_in":3600,
-   "refresh_token":"4LTC8lb0acc6Oy4esc1Nk9BWC0imAwH7kic16BDC2",
-   "scope":"calendar",
-   "resource":["https://cal.example.com/"]
+   "refresh_token": "4LTC8lb0acc6Oy4esc1Nk9BWC0imAwH7kic16BDC2",
+   "scope": "calendar",
+   "resource": ["https://cal.example.com/"]
 }
 </pre>
 </div>
 <figcaption><a href="#figure-1" class="selfRef">Figure 1</a>:
 <a href="#name-access-token-response-with-" class="selfRef">Access Token Response with Resource</a>
-        </figcaption></figure>
+          </figcaption></figure>
+</div>
+<p id="section-2.1-6">The following is a non-normative example of a token endpoint response
+where the authorization server, acting as an OpenID Provider, issues an
+access token for the UserInfo endpoint based on the <code>openid</code> scope value
+that was requested by the client. The authorization server uses the
+<code>userinfo_endpoint</code> URL from its discovery metadata as the <code>resource</code>
+value.<a href="#section-2.1-6" class="pilcrow">¶</a></p>
+<span id="name-access-token-response-with-s"></span><div id="response-example-scope-resource">
+<figure id="figure-2">
+          <div class="alignLeft art-text artwork" id="section-2.1-7.1">
+<pre>
+HTTP/1.1 200 OK
+Content-Type: application/json
+Cache-Control: no-cache, no-store
+
+{
+   "access_token": "_Q-oyRuYqHlj_ZgXwuS54thQm_L5GhB3XH2cVtYfqh",
+   "token_type": "Bearer",
+   "expires_in":3600,
+   "refresh_token": "4LTC8lb0acc6Oy4esc1Nk9BWC0imAwH7kic16BDC2",
+   "id_token": "eyJhbGciOiJSUzI...",
+   "scope": "openid email profile",
+   "resource": ["https://server.example.com/userinfo"]
+}
+</pre>
+</div>
+<figcaption><a href="#figure-2" class="selfRef">Figure 2</a>:
+<a href="#name-access-token-response-with-s" class="selfRef">Access Token Response with Scope-Determined Resource</a>
+          </figcaption></figure>
+</div>
+</section>
 </div>
 </section>
 </div>
@@ -1370,37 +1432,61 @@ document<a href="#section-5.1-2.8.1" class="pilcrow">¶</a></p>
 </div>
 </section>
 </div>
-<div id="sec-normative-references">
+<div id="sec-combined-references">
 <section id="section-6">
-      <h2 id="name-normative-references">
-<a href="#section-6" class="section-number selfRef">6. </a><a href="#name-normative-references" class="section-name selfRef">Normative References</a>
+      <h2 id="name-references">
+<a href="#section-6" class="section-number selfRef">6. </a><a href="#name-references" class="section-name selfRef">References</a>
       </h2>
+<div id="sec-normative-references">
+<section id="section-6.1">
+        <h3 id="name-normative-references">
+<a href="#section-6.1" class="section-number selfRef">6.1. </a><a href="#name-normative-references" class="section-name selfRef">Normative References</a>
+        </h3>
 <dl class="references">
 <dt id="IANA.OAuth.Parameters">[IANA.OAuth.Parameters]</dt>
-      <dd>
+        <dd>
 <span class="refAuthor">IANA</span>, <span class="refTitle">"OAuth Parameters"</span>, <span>&lt;<a href="https://www.iana.org/assignments/oauth-parameters">https://www.iana.org/assignments/oauth-parameters</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC2119">[RFC2119]</dt>
-      <dd>
+        <dd>
 <span class="refAuthor">Bradner, S.</span>, <span class="refTitle">"Key words for use in RFCs to Indicate Requirement Levels"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 2119</span>, <span class="seriesInfo">DOI 10.17487/RFC2119</span>, <time datetime="1997-03" class="refDate">March 1997</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc2119">https://www.rfc-editor.org/rfc/rfc2119</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC3986">[RFC3986]</dt>
-      <dd>
+        <dd>
 <span class="refAuthor">Berners-Lee, T.</span>, <span class="refAuthor">Fielding, R.</span>, and <span class="refAuthor">L. Masinter</span>, <span class="refTitle">"Uniform Resource Identifier (URI): Generic Syntax"</span>, <span class="seriesInfo">STD 66</span>, <span class="seriesInfo">RFC 3986</span>, <span class="seriesInfo">DOI 10.17487/RFC3986</span>, <time datetime="2005-01" class="refDate">January 2005</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc3986">https://www.rfc-editor.org/rfc/rfc3986</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC6749">[RFC6749]</dt>
-      <dd>
+        <dd>
 <span class="refAuthor">Hardt, D., Ed.</span>, <span class="refTitle">"The OAuth 2.0 Authorization Framework"</span>, <span class="seriesInfo">RFC 6749</span>, <span class="seriesInfo">DOI 10.17487/RFC6749</span>, <time datetime="2012-10" class="refDate">October 2012</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc6749">https://www.rfc-editor.org/rfc/rfc6749</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC8174">[RFC8174]</dt>
-      <dd>
+        <dd>
 <span class="refAuthor">Leiba, B.</span>, <span class="refTitle">"Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 8174</span>, <span class="seriesInfo">DOI 10.17487/RFC8174</span>, <time datetime="2017-05" class="refDate">May 2017</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8174">https://www.rfc-editor.org/rfc/rfc8174</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC8707">[RFC8707]</dt>
-    <dd>
+      <dd>
 <span class="refAuthor">Campbell, B.</span>, <span class="refAuthor">Bradley, J.</span>, and <span class="refAuthor">H. Tschofenig</span>, <span class="refTitle">"Resource Indicators for OAuth 2.0"</span>, <span class="seriesInfo">RFC 8707</span>, <span class="seriesInfo">DOI 10.17487/RFC8707</span>, <time datetime="2020-02" class="refDate">February 2020</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8707">https://www.rfc-editor.org/rfc/rfc8707</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 </dl>
+</section>
+</div>
+<div id="sec-informative-references">
+<section id="section-6.2">
+        <h3 id="name-informative-references">
+<a href="#section-6.2" class="section-number selfRef">6.2. </a><a href="#name-informative-references" class="section-name selfRef">Informative References</a>
+        </h3>
+<dl class="references">
+<dt id="OpenID.Core">[OpenID.Core]</dt>
+        <dd>
+<span class="refAuthor">Sakimura, N.</span>, <span class="refAuthor">Bradley, J.</span>, <span class="refAuthor">Jones, M.</span>, <span class="refAuthor">Medeiros, B. de.</span>, and <span class="refAuthor">C. Mortimore</span>, <span class="refTitle">"OpenID Connect Core 1.0 incorporating errata set 2"</span>, <span class="seriesInfo">The OpenID Foundation </span>, <time datetime="2023-12-15" class="refDate">15 December 2023</time>, <span>&lt;<a href="https://openid.net/specs/openid-connect-core-1_0-errata2.html">https://openid.net/specs/openid-connect-core-1_0-errata2.html</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC9728">[RFC9728]</dt>
+      <dd>
+<span class="refAuthor">Jones, M.B.</span>, <span class="refAuthor">Hunt, P.</span>, and <span class="refAuthor">A. Parecki</span>, <span class="refTitle">"OAuth 2.0 Protected Resource Metadata"</span>, <span class="seriesInfo">RFC 9728</span>, <span class="seriesInfo">DOI 10.17487/RFC9728</span>, <time datetime="2025-04" class="refDate">April 2025</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9728">https://www.rfc-editor.org/rfc/rfc9728</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+</dl>
+</section>
+</div>
 </section>
 </div>
 <div id="acknowledgments">
@@ -1418,10 +1504,17 @@ Tschofenig.<a href="#appendix-A-1" class="pilcrow">¶</a></p>
       <h2 id="name-document-history">
 <a href="#name-document-history" class="section-name selfRef">Document History</a>
       </h2>
-<p id="appendix-B-1">draft-skokan-oauth-resource-response-00<a href="#appendix-B-1" class="pilcrow">¶</a></p>
+<p id="appendix-B-1">draft-skokan-oauth-resource-response-02<a href="#appendix-B-1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="appendix-B-2.1">
-          <p id="appendix-B-2.1.1">Initial draft defining the <code>resource</code> access token response parameter<a href="#appendix-B-2.1.1" class="pilcrow">¶</a></p>
+          <p id="appendix-B-2.1.1">Added guidance on scope or policy determined resource values<a href="#appendix-B-2.1.1" class="pilcrow">¶</a></p>
+</li>
+      </ul>
+<p id="appendix-B-3">draft-skokan-oauth-resource-response-01<a href="#appendix-B-3" class="pilcrow">¶</a></p>
+<p id="appendix-B-4">draft-skokan-oauth-resource-response-00<a href="#appendix-B-4" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="appendix-B-5.1">
+          <p id="appendix-B-5.1.1">Initial draft defining the <code>resource</code> access token response parameter<a href="#appendix-B-5.1.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
 </section>
