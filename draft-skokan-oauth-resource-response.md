@@ -41,6 +41,21 @@ normative:
       - org: IANA
     date: false
 
+informative:
+  RFC9728:
+  OpenID.Core:
+    title: "OpenID Connect Core 1.0 incorporating errata set 2"
+    target: https://openid.net/specs/openid-connect-core-1_0-errata2.html
+    author:
+      - name: N. Sakimura
+      - name: J. Bradley
+      - name: M. Jones
+      - name: B. de Medeiros
+      - name: C. Mortimore
+    date: 2023-12-15
+    seriesinfo:
+      The OpenID Foundation: ""
+
 ...
 
 --- abstract
@@ -116,10 +131,33 @@ subset of those resources, the authorization server MUST include the
 effective resource(s). The client can then make additional token requests
 for the remaining resources as needed.
 
+## Scope or Policy Determined Resources {#ScopeDeterminedResources}
+
+In some deployments, certain scope values are inherently associated with
+specific protected resources. For example, the `openid` scope in
+OpenID Connect {{OpenID.Core}} is tightly coupled to the UserInfo
+endpoint, and authorization
+servers may define scope values that are only meaningful at a particular
+resource.
+
+When an authorization server issues an access token for a resource that
+it determined based on requested scope values or its own default policy,
+rather than from an explicit `resource` request parameter, the
+authorization server SHOULD use the resource's designated Resource
+Identifier {{RFC9728}} as the `resource` response parameter value. If
+no Resource Identifier is defined for the resource, the authorization
+server SHOULD use the exact URL of the protected resource instead. The
+value used SHOULD be one that the client can recognize and correlate
+with the intended protected resource (e.g., the UserInfo endpoint URL
+for an OpenID Provider when the `openid` scope is requested).
+
+Since such a resource value was not explicitly requested by the client,
+the `resource` response parameter is REQUIRED in this case per the
+condition defined in {{ResourceResponseParameter}}.
+
 The following is a non-normative example of a token endpoint response
 where the authorization server indicates that the issued access token is
-valid for use at `https://cal.example.com/` (extra line breaks and
-indentation are for display purposes only).
+valid for use at `https://cal.example.com/`.
 
 ~~~
 HTTP/1.1 200 OK
@@ -127,20 +165,39 @@ Content-Type: application/json
 Cache-Control: no-cache, no-store
 
 {
-   "access_token":"eyJhbGciOiJFUzI1NiIsImtpZCI6Ijc3In0.eyJpc3MiOi
-    JodHRwOi8vYXV0aG9yaXphdGlvbi1zZXJ2ZXIuZXhhbXBsZS5jb20iLCJzdWI
-    iOiJfX2JfYyIsImV4cCI6MTU4ODQyMDgwMCwic2NvcGUiOiJjYWxlbmRhciIs
-    ImF1ZCI6Imh0dHBzOi8vY2FsLmV4YW1wbGUuY29tLyJ9.nNWJ2dXSxaDRdMUK
-    lzs-cYIj8MDoM6Gy7pf_sKrLGsAFf1C2bDhB60DQfW1DZL5npdko1_Mmk5sUf
-    zkiQNVpYw",
-   "token_type":"Bearer",
+   "access_token": "_Q-oyRuYqHlj_ZgXwuS54thQm_L5GhB3XH20cVtYfq",
+   "token_type": "Bearer",
    "expires_in":3600,
-   "refresh_token":"4LTC8lb0acc6Oy4esc1Nk9BWC0imAwH7kic16BDC2",
-   "scope":"calendar",
-   "resource":["https://cal.example.com/"]
+   "refresh_token": "4LTC8lb0acc6Oy4esc1Nk9BWC0imAwH7kic16BDC2",
+   "scope": "calendar",
+   "resource": ["https://cal.example.com/"]
 }
 ~~~
 {: #response-example-resource title="Access Token Response with Resource"}
+
+The following is a non-normative example of a token endpoint response
+where the authorization server, acting as an OpenID Provider, issues an
+access token for the UserInfo endpoint based on the `openid` scope value
+that was requested by the client. The authorization server uses the
+`userinfo_endpoint` URL from its discovery metadata as the `resource`
+value.
+
+~~~
+HTTP/1.1 200 OK
+Content-Type: application/json
+Cache-Control: no-cache, no-store
+
+{
+   "access_token": "_Q-oyRuYqHlj_ZgXwuS54thQm_L5GhB3XH2cVtYfqh",
+   "token_type": "Bearer",
+   "expires_in":3600,
+   "refresh_token": "4LTC8lb0acc6Oy4esc1Nk9BWC0imAwH7kic16BDC2",
+   "id_token": "eyJhbGciOiJSUzI...",
+   "scope": "openid email profile",
+   "resource": ["https://server.example.com/userinfo"]
+}
+~~~
+{: #response-example-scope-resource title="Access Token Response with Scope-Determined Resource"}
 
 # Security Considerations
 
@@ -194,6 +251,12 @@ Tschofenig.
 
 # Document History
 {:numbered="false"}
+
+draft-skokan-oauth-resource-response-02
+
+- Added guidance on scope or policy determined resource values
+
+draft-skokan-oauth-resource-response-01
 
 draft-skokan-oauth-resource-response-00
 
