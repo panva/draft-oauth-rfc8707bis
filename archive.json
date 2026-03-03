@@ -1,0 +1,71 @@
+{
+  "magic": "E!vIA5L86J2I",
+  "timestamp": "2026-03-03T00:13:12.277910+00:00",
+  "repo": "panva/draft-oauth-rfc8707bis",
+  "labels": [
+    {
+      "name": "bug",
+      "description": "Something isn't working",
+      "color": "d73a4a"
+    },
+    {
+      "name": "documentation",
+      "description": "Improvements or additions to documentation",
+      "color": "0075ca"
+    },
+    {
+      "name": "duplicate",
+      "description": "This issue or pull request already exists",
+      "color": "cfd3d7"
+    },
+    {
+      "name": "enhancement",
+      "description": "New feature or request",
+      "color": "a2eeef"
+    },
+    {
+      "name": "good first issue",
+      "description": "Good for newcomers",
+      "color": "7057ff"
+    },
+    {
+      "name": "help wanted",
+      "description": "Extra attention is needed",
+      "color": "008672"
+    },
+    {
+      "name": "invalid",
+      "description": "This doesn't seem right",
+      "color": "e4e669"
+    },
+    {
+      "name": "question",
+      "description": "Further information is requested",
+      "color": "d876e3"
+    },
+    {
+      "name": "wontfix",
+      "description": "This will not be worked on",
+      "color": "ffffff"
+    }
+  ],
+  "issues": [
+    {
+      "number": 1,
+      "id": "I_kwDORbaq6s7u0rRd",
+      "title": "Response parameter naming: \"resource\" (array) vs \"resource\"/\"resources\" (string/array)",
+      "url": "https://github.com/panva/draft-oauth-rfc8707bis/issues/1",
+      "state": "OPEN",
+      "author": "panva",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "Should the response use `\"resource\"` (a JSON string) when a single resource is indicated and `\"resources\"` (a JSON array of strings) when multiple are indicated? Or should a single parameter name be used with consistently one type?\n\nUsing a single name (`\"resource\"`) with a JSON array value aligns with RFC 8707's request parameter naming but introduces a type difference (repeated query/form parameter vs. JSON array). Using two names would make the cardinality explicit but diverges from how `scope` works.",
+      "createdAt": "2026-03-01T09:48:59Z",
+      "updatedAt": "2026-03-01T09:48:59Z",
+      "closedAt": null,
+      "comments": []
+    }
+  ],
+  "pulls": []
+}
